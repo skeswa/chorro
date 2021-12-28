@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: chorro
+  name: chorro-web-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chorro
+  template:
+    metadata:
+      labels:
+        app: chorro
+    spec:
+      containers:
+      - name: chorro-web
+        image: ghcr.io/skeswa/chorro-web:0.0.1
+        ports:
+        - containerPort: 3000
+        resources:
+          limits:
+            cpu: "500m"
+            memory: "256M"

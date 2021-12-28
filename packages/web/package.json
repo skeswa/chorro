@@ -9,6 +9,7 @@
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "dev": "svelte-kit dev",
     "format": "prettier --ignore-path .gitignore --write --plugin-search-dir=. .",
+    "k8s:apply": "node ./scripts/applyK8sConfig.mjs",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "package": "svelte-kit package",
     "preview": "svelte-kit preview"

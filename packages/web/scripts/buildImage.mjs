@@ -1,5 +1,5 @@
 import { execSync } from 'child_process';
-import { dirname, join as asPath } from 'path';
+import { join as asPath } from 'path';
 
 import { composeWebDockerImageTag } from './core/dockerUtil.mjs';
 import {
@@ -19,7 +19,7 @@ const packageDirectoryPath = asPath(
 
 const webDockerImageTag = composeWebDockerImageTag(packageDirectoryPath);
 
-console.info(`Building ${webDockerImageTag}...`);
+console.info(`[packages/web] Building docker image ${webDockerImageTag}...`);
 
 execSync(
   [
@@ -30,7 +30,7 @@ execSync(
     '.',
   ].join(' '),
   {
-    cwd: resolveProjectRootDirectoryPath(),
+    cwd: rootDirectoryPath,
     // Ignore stdin.
     input: 'ignore',
     // Pipe stdout and stderr to the terminal.
