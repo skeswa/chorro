@@ -15,11 +15,11 @@ spec:
         app: chorro
     spec:
       containers:
-      - name: chorro-web
-        image: ghcr.io/skeswa/chorro-web:0.0.1
-        ports:
-        - containerPort: 3000
-        resources:
-          limits:
-            cpu: "500m"
-            memory: "256M"
+        - name: chorro-web
+          image: ghcr.io/skeswa/chorro-web:0.0.1
+          ports:
+            - containerPort: 3000
+          resources:
+            limits:
+              cpu: '500m'
+              memory: '256M'
