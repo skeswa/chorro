@@ -1,0 +1,23 @@
+# Based on Linode's example:
+# https://www.linode.com/docs/guides/how-to-deploy-nginx-ingress-on-linode-kubernetes-engine/#configuring-the-ingress-controller
+
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    kubernetes.io/ingress.class: nginx
+  labels:
+    app: chorro
+  name: chorro-web-ingress
+spec:
+  rules:
+    - host: chorro.app
+      http:
+        paths:
+          - pathType: Prefix
+            path: '/'
+            backend:
+              service:
+                name: chorro-web-service
+                port:
+                  number: 80

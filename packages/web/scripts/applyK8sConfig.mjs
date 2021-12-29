@@ -4,6 +4,7 @@ import { join as asPath } from 'path';
 import {
   k8sDeploymentFileName,
   k8sDirectoryName,
+  k8sIngressFileName,
   k8sServiceFileName,
   packagesDirectoryName,
   webDirectoryName,
@@ -32,6 +33,16 @@ execSync(['kubectl', 'apply', '-f', k8sDeploymentFileName].join(' '), {
 console.info('[packages/web] Appling k8s service configuration...');
 
 execSync(['kubectl', 'apply', '-f', k8sServiceFileName].join(' '), {
+  cwd: k8sDirectoryPath,
+  // Ignore stdin.
+  input: 'ignore',
+  // Pipe stdout and stderr to the terminal.
+  stdio: 'inherit',
+});
+
+console.info('[packages/web] Appling k8s ingress configuration...');
+
+execSync(['kubectl', 'apply', '-f', k8sIngressFileName].join(' '), {
   cwd: k8sDirectoryPath,
   // Ignore stdin.
   input: 'ignore',
