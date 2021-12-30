@@ -1,0 +1,4 @@
+.svelte-kit
+.turbo
+build
+node_modules

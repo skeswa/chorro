@@ -4,6 +4,7 @@
   "scripts": {},
   "devDependencies": {
     "@changesets/cli": "^2.19.0",
+    "prettier": "^2.5.1",
     "turbo": "^1.0.23"
   },
   "turbo": {
@@ -27,6 +28,7 @@
       "lint": {
         "outputs": []
       },
+      "format": {},
       "test": {
         "dependsOn": [
           "build"

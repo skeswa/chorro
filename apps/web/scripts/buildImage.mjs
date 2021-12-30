@@ -19,7 +19,9 @@ const appDirectoryPath = asPath(
 
 const webDockerImageTag = composeWebDockerImageTag(appDirectoryPath);
 
-console.info(`[${appsDirectoryName}/${webAppDirectoryName}] Building docker image ${webDockerImageTag}...`);
+console.info(
+  `[${appsDirectoryName}/${webAppDirectoryName}] Building docker image ${webDockerImageTag}...`,
+);
 
 execSync(
   [
