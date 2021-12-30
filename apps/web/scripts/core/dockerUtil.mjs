@@ -11,10 +11,10 @@ import { packageJsonFileName } from './fileConstants.mjs';
 /**
  * Current tag that should be applied to the `web` docker image.
  *
- * @param {*} packageDirectoryPath path to the `web` package directory
+ * @param {*} appDirectoryPath path to the `web` app directory
  */
-export function composeWebDockerImageTag(packageDirectoryPath) {
-  const packageJsonFilePath = asPath(packageDirectoryPath, packageJsonFileName);
+export function composeWebDockerImageTag(appDirectoryPath) {
+  const packageJsonFilePath = asPath(appDirectoryPath, packageJsonFileName);
   try {
     const packageJsonFileContents = readFileSync(packageJsonFilePath, 'utf8');
     const packageJson = JSON.parse(packageJsonFileContents);

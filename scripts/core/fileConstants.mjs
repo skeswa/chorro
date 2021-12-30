@@ -1,3 +1,6 @@
+/** Name of the `apps` directory. */
+export const appsDirectoryName = 'apps';
+
 /** File name of any `Dockerfile`. */
 export const dockerfileFileName = 'Dockerfile';
 
@@ -16,8 +19,5 @@ export const k8sServiceFileName = 'service.yml';
 /** File name of any `package.json`. */
 export const packageJsonFileName = 'package.json';
 
-/** Name of the `packages` directory. */
-export const packagesDirectoryName = 'packages';
-
-/** Name of the `web` directory. */
-export const webDirectoryName = 'web';
+/** Name of the `web` app directory. */
+export const webAppDirectoryName = 'web';

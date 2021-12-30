@@ -1,10 +1,41 @@
 {
   "name": "chorro",
   "private": true,
+  "scripts": {},
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@changesets/cli": "^2.19.0",
+    "turbo": "^1.0.23"
+  },
+  "turbo": {
+    "baseBranch": "origin/main",
+    "pipeline": {
+      "build": {
+        "dependsOn": [
+          "^build"
+        ]
+      },
+      "deploy": {
+        "dependsOn": [
+          "build",
+          "test",
+          "lint"
+        ]
+      },
+      "dev": {
+        "cache": false
+      },
+      "lint": {
+        "outputs": []
+      },
+      "test": {
+        "dependsOn": [
+          "build"
+        ]
+      }
+    }
   },
   "workspaces": [
+    "apps/*",
     "packages/*"
   ]
 }

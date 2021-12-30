@@ -3,29 +3,29 @@ import { join as asPath } from 'path';
 
 import { composeWebDockerImageTag } from './core/dockerUtil.mjs';
 import {
+  appsDirectoryName,
   dockerfileFileName,
-  packagesDirectoryName,
-  webDirectoryName,
+  webAppDirectoryName,
 } from './core/fileConstants.mjs';
 import { resolveProjectRootDirectoryPath } from './core/fileUtil.mjs';
 
 const rootDirectoryPath = resolveProjectRootDirectoryPath();
 
-const packageDirectoryPath = asPath(
+const appDirectoryPath = asPath(
   rootDirectoryPath,
-  packagesDirectoryName,
-  webDirectoryName,
+  appsDirectoryName,
+  webAppDirectoryName,
 );
 
-const webDockerImageTag = composeWebDockerImageTag(packageDirectoryPath);
+const webDockerImageTag = composeWebDockerImageTag(appDirectoryPath);
 
-console.info(`[packages/web] Building docker image ${webDockerImageTag}...`);
+console.info(`[${appsDirectoryName}/${webAppDirectoryName}] Building docker image ${webDockerImageTag}...`);
 
 execSync(
   [
     'docker',
     'build',
-    ...['-f', asPath(packageDirectoryPath, dockerfileFileName)],
+    ...['-f', asPath(appDirectoryPath, dockerfileFileName)],
     ...['-t', webDockerImageTag],
     '.',
   ].join(' '),

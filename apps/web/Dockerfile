@@ -5,40 +5,28 @@
 
 FROM node:17-alpine as build
 
-# Host the app in `~/app` of the `node` user.
-WORKDIR /home/node/app
-
-# Copy over the stuff that `yarn` needs to do its job.
-COPY package.json .
-COPY yarn.lock .
+# Host the monorepo in `~/repo` of the `node` user.
+WORKDIR /home/node/repo
 
 # Copy over all relevant source code.
-#
-# # TODO(skeswa): put any shared packages needed by `web` here.
-# COPY packages/shared ./packages/shared
-COPY packages/web ./packages/web
+COPY . .
 
 # Fetch the dependencies we need to build `web`.
 RUN yarn install --pure-lockfile --non-interactive
 
-# # TODO(skeswa): Build any shared packages needed by `web` here.
-# WORKDIR /home/node/app/packages/shared
-# RUN yarn build
-
-# Build `web`.
-WORKDIR /home/node/app/packages/web
-RUN yarn build
+# Build everything.
+RUN yarn turbo run build
 
 # RUN ##########################################################################
 
 FROM node:17-alpine as run
 
 # Host the app in `~/app` of the `node` user.
-WORKDIR /home/node/app/packages/web
+WORKDIR /home/node/app
 
 # Copy over `web`'s `package.json` and built server source directory.
-COPY --from=build /home/node/app/packages/web/package.json /home/node/app/packages/web/package.json
-COPY --from=build /home/node/app/packages/web/build /home/node/app/packages/web/build
+COPY --from=build /home/node/repo/apps/web/package.json .
+COPY --from=build /home/node/repo/apps/web/build ./build
 
 # Specify that we're running in production.
 ENV NODE_ENV production

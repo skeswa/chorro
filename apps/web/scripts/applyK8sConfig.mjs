@@ -2,12 +2,12 @@ import { execSync } from 'child_process';
 import { join as asPath } from 'path';
 
 import {
+  appsDirectoryName,
   k8sDeploymentFileName,
   k8sDirectoryName,
   k8sIngressFileName,
   k8sServiceFileName,
-  packagesDirectoryName,
-  webDirectoryName,
+  webAppDirectoryName,
 } from './core/fileConstants.mjs';
 import { resolveProjectRootDirectoryPath } from './core/fileUtil.mjs';
 
@@ -15,8 +15,8 @@ const rootDirectoryPath = resolveProjectRootDirectoryPath();
 
 const k8sDirectoryPath = asPath(
   rootDirectoryPath,
-  packagesDirectoryName,
-  webDirectoryName,
+  appsDirectoryName,
+  webAppDirectoryName,
   k8sDirectoryName,
 );
 
