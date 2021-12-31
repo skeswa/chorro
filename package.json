@@ -4,7 +4,7 @@
   "scripts": {
     "test": "turbo run test",
     "prepare": "husky install",
-    "reset": "git-delete-squashed main"
+    "reset": "git checkout main && git pull && git-delete-squashed main"
   },
   "devDependencies": {
     "@changesets/cli": "^2.19.0",
