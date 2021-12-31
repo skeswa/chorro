@@ -1,7 +1,7 @@
 {
   "name": "@chorro/web",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.1.1",
   "scripts": {
     "build": "svelte-kit build",
     "image:build": "node ./scripts/buildImage.mjs",
