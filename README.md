@@ -25,11 +25,11 @@ chorro/
 Chorro has only one main `git` branch - `main`. The `main` branch only accepts changes made to it via
 [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests). Chorro uses [changesets](https://github.com/changesets/changesets) to provide semantic change management for each of the app.
 
-Every pull request (PR) should be accompanied by the addition of a new changeset - **PRs cannot be merged without including a new changeset**
-([this functionality is made possible by the changeset bot](https://github.com/apps/changeset-bot)).
-
-Adding a new changeset is easy:
+Every pull request (PR) should be accompanied by the addition of a new changeset. Luckily, adding a new changeset is easy:
 
 ```bash
 $ yarn changeset
 ```
+
+**NOTE: PRs cannot be merged without including a new changeset** \
+We use [the changeset bot](https://github.com/apps/changeset-bot) to ensure that our PRs include corresponding changesets.
