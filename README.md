@@ -38,3 +38,46 @@ $ yarn changeset
 **NOTE: PRs should not be merged without also including a new changeset** \
 We use [the changeset bot](https://github.com/apps/changeset-bot) to ensure that
 our PRs include corresponding changesets.
+
+#### Workflow
+
+1.  Create a new branch off of `main`
+
+    - if creating a new feature, use the `feature/` branch name prefix (e.g.
+      `feature/build-the-thing`)
+    - if fixing a bug, use the `bugfix/` branch name prefix (e.g.
+      `bugfix/fix-the-thing`)
+    - if hotfixing an issue, use the `hotfix/` branch name prefix (e.g.
+      `hotfix/patch-the-thing`)
+
+    ```bash
+    $ git pull
+    $ git checkout -b feature/trust-the-process
+    ```
+
+2.  Make changes via `git commit`, continually rebasing against `origin/main`
+
+    ```bash
+    $ git commit -am 'Made some changes'
+    $ git pull --rebase origin master
+    ```
+
+3.  Add changesets along the way describing any changes recognizable to humans
+
+    ```bash
+    $ yarn changeset
+    ```
+
+4.  When you're ready for review, publish your branch to the repo, and create a
+    [pull request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/about-pull-requests)
+    against `origin/main`
+
+    ```bash
+    $ git push
+    ```
+
+5.  Once you merge your PR, use `yarn reset` to do post-merge cleanup locally
+
+    ```bash
+    $ yarn reset
+    ```
