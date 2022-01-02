@@ -2,15 +2,19 @@
   "name": "chorro",
   "private": true,
   "scripts": {
-    "test": "turbo run test",
+    "deploytest": "node ./scripts/deploy.mjs",
+    "deploy": "node ./scripts/deploy.mjs",
     "prepare": "husky install",
-    "reset": "git checkout main && git pull && git-delete-squashed main"
+    "reset": "git checkout main && git pull && git-delete-squashed main",
+    "test": "turbo run test"
   },
   "devDependencies": {
     "@changesets/cli": "^2.19.0",
+    "es-main": "^1.0.2",
     "git-branch-is": "^4.0.0",
     "git-delete-squashed": "^1.0.4",
     "husky": "^7.0.0",
+    "js-yaml": "^4.1.0",
     "prettier": "^2.5.1",
     "pretty-quick": "^3.1.3",
     "turbo": "^1.0.23"
@@ -24,13 +28,6 @@
           "^build"
         ]
       },
-      "deploy": {
-        "dependsOn": [
-          "build",
-          "test",
-          "lint"
-        ]
-      },
       "dev": {
         "cache": false
       },
@@ -38,6 +35,14 @@
         "outputs": []
       },
       "format": {},
+      "predeploy": {
+        "dependsOn": [
+          "build",
+          "test",
+          "lint"
+        ],
+        "outputs": []
+      },
       "test": {
         "dependsOn": [
           "build"
@@ -48,5 +53,6 @@
   "workspaces": [
     "apps/*",
     "packages/*"
-  ]
+  ],
+  "version": "0.0.0"
 }
