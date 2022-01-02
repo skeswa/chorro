@@ -1,5 +1,4 @@
-/** Domain of the container registry used to host the `web` docker image. */
-export const containerRegistryDomain = 'ghcr.io';
+export * from '../../../../scripts/core/fileConstants.mjs';
 
 /**
  * Name of the `web` docker image.
