@@ -4,14 +4,14 @@
   "version": "0.1.1",
   "scripts": {
     "build": "svelte-kit build",
-    "image:build": "node ./scripts/buildImage.mjs",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "deploy": "node ./scripts/deploy.mjs",
     "dev": "svelte-kit dev",
     "format": "prettier --write .",
-    "k8s:apply": "node ./scripts/applyK8sConfig.mjs",
     "lint": "prettier --ignore-path .gitignore --check --plugin-search-dir=. . && eslint --ignore-path .gitignore .",
     "package": "svelte-kit package",
+    "predeploy": "node ./scripts/predeploy.mjs",
     "preview": "svelte-kit preview"
   },
   "devDependencies": {
