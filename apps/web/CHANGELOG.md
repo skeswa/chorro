@@ -1,5 +1,11 @@
 # @chorro/web
 
+## 0.1.2
+
+### Patch Changes
+
+- 2fba327: @chorro/web now has a fully-capable CI/CD pipeline in place.
+
 ## 0.1.1
 
 ### Patch Changes
