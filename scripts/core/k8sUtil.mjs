@@ -23,20 +23,34 @@ const K8S_CONFIGURATION_FILE_PATH_PATTERN = RegExp(
  *
  * @param rootDirectoryPath is the root directory path of the monorepo
  */
-export function applyK8sConfigurationFile(
+export function applyK8sConfigurationFile({
   relativeK8sConfigurationFilePath,
   rootDirectoryPath,
-) {
-  execSync(
+}) {
+  const output = execSync(
     ['kubectl', 'apply', '-f', relativeK8sConfigurationFilePath].join(' '),
     {
       cwd: rootDirectoryPath,
-      // Ignore stdin.
-      input: 'ignore',
-      // Pipe stdout and stderr to the terminal.
-      stdio: 'inherit',
+      encoding: 'utf-8',
     },
   );
+
+  const sanitizedOutput = output.trim().toLowerCase();
+  if (sanitizedOutput.endsWith(' unchanged')) {
+    console.log(
+      relativeK8sConfigurationFilePath,
+      'did not update cluster configuration.',
+    );
+
+    return { didConfigure: false };
+  } else {
+    console.log(
+      relativeK8sConfigurationFilePath,
+      'updated cluster configuration successfully!',
+    );
+
+    return { didConfigure: true };
+  }
 }
 
 /** @returns `true` if `filePath` refers to a k8s configuration file */

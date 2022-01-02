@@ -12,7 +12,7 @@ import {
 } from './core/fileConstants.mjs';
 import { resolveProjectRootDirectoryPath } from './core/fileUtil.mjs';
 import { readK8sDeployment, writeK8sDeployment } from './core/k8sUtil.mjs';
-import { readPackageVersion } from './core/nodeUtil.mjs';
+import { readPackageMetadata } from './core/nodeUtil.mjs';
 
 /**
  * Prepares `@chorro/web` for deployment within a Kubernetes cluster:
@@ -47,7 +47,7 @@ export function releaseChorroWeb() {
 
   const { dockerImageVersion: k8sDeploymentDocumentImageVersion } =
     decomposedK8sDeploymentDocumentImageTag;
-  const packageVersion = readPackageVersion(appDirectoryPath);
+  const { version: packageVersion } = readPackageMetadata(appDirectoryPath);
 
   if (k8sDeploymentDocumentImageVersion === packageVersion) {
     console.info(

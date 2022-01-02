@@ -11,27 +11,47 @@ import {
 } from './core/fileConstants.mjs';
 import { resolveProjectRootDirectoryPath } from './core/fileUtil.mjs';
 import { applyK8sConfigurationFile } from './core/k8sUtil.mjs';
+import { readPackageMetadata } from './core/nodeUtil.mjs';
 
 /** Re-applies all of the k8s configuration for `@chorro/web`. */
 export function deployChorroWeb() {
   const logTag = `[${appsDirectoryName}/${webAppDirectoryName}]`;
   const rootDirectoryPath = resolveProjectRootDirectoryPath();
 
-  const k8sDirectoryPath = asPath(
+  const appDirectoryPath = asPath(
     rootDirectoryPath,
     appsDirectoryName,
     webAppDirectoryName,
-    k8sDirectoryName,
   );
 
+  const k8sDirectoryPath = asPath(appDirectoryPath, k8sDirectoryName);
+
   console.info(logTag, 'Applying k8s deployment configuration...');
-  applyK8sConfigurationFile(k8sDeploymentFileName, k8sDirectoryPath);
+
+  const k8sDeploymentUpdate = applyK8sConfigurationFile({
+    relativeK8sConfigurationFilePath: k8sDeploymentFileName,
+    rootDirectoryPath: k8sDirectoryPath,
+  });
+  if (k8sDeploymentUpdate.didConfigure) {
+    const { name, version } = readPackageMetadata(appDirectoryPath);
+
+    // NOTE: we do this so that `https://github.com/changesets/action`
+    // automatically recognizes that this `package` was "published"
+    // successfully.
+    console.log(`New tag: ${name}@${version}`);
+  }
 
   console.info(logTag, 'Applying k8s service configuration...');
-  applyK8sConfigurationFile(k8sServiceFileName, k8sDirectoryPath);
+  applyK8sConfigurationFile({
+    relativeK8sConfigurationFilePath: k8sServiceFileName,
+    rootDirectoryPath: k8sDirectoryPath,
+  });
 
   console.info(logTag, 'Applying k8s ingress configuration...');
-  applyK8sConfigurationFile(k8sIngressFileName, k8sDirectoryPath);
+  applyK8sConfigurationFile({
+    relativeK8sConfigurationFilePath: k8sIngressFileName,
+    rootDirectoryPath: k8sDirectoryPath,
+  });
 }
 
 /** Invokes `deployChorroWeb` if this file was run directly. */
