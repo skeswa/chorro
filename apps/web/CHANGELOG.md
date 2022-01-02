@@ -1,5 +1,11 @@
 # @chorro/web
 
+## 0.1.3
+
+### Patch Changes
+
+- 50ea591: Unbroke automatic changesets/action release creation on publish.
+
 ## 0.1.2
 
 ### Patch Changes
