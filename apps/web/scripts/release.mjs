@@ -6,6 +6,8 @@ import { composeDockerImageTag } from './core/dockerUtil.mjs';
 import {
   appsDirectoryName,
   dockerfileFileName,
+  k8sDeploymentFileName,
+  k8sDirectoryName,
   webAppDirectoryName,
 } from './core/fileConstants.mjs';
 import { resolveProjectRootDirectoryPath } from './core/fileUtil.mjs';
@@ -24,7 +26,7 @@ import { readPackageVersion } from './core/nodeUtil.mjs';
  * -  If package version **does NOT** differs from k8s deployment config, then:
  *    - Does nothing
  */
-export function predeployChorroWeb() {
+export function releaseChorroWeb() {
   const logTag = `[${appsDirectoryName}/${webAppDirectoryName}]`;
   const rootDirectoryPath = resolveProjectRootDirectoryPath();
 
@@ -36,7 +38,8 @@ export function predeployChorroWeb() {
 
   const k8sDeploymentFilePath = asPath(
     appDirectoryPath,
-    k8sDeploymentRelativeFilePath,
+    k8sDirectoryName,
+    k8sDeploymentFileName,
   );
 
   const { decomposedK8sDeploymentDocumentImageTag, k8sDeploymentDocument } =
@@ -112,7 +115,7 @@ export function predeployChorroWeb() {
   });
 }
 
-/** Invokes `predeployChorroWeb` if this file was run directly. */
+/** Invokes `releaseChorroWeb` if this file was run directly. */
 if (esMain(import.meta)) {
-  predeployChorroWeb();
+  releaseChorroWeb();
 }

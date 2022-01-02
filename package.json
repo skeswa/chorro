@@ -3,8 +3,8 @@
   "private": true,
   "scripts": {
     "deploy": "turbo run deploy",
-    "predeploy": "changeset version && turbo run predeploy",
     "prepare": "husky install",
+    "release": "changeset version && turbo run release",
     "reset": "git checkout main && git pull && git-delete-squashed main",
     "test": "turbo run test"
   },
@@ -38,7 +38,7 @@
         "outputs": []
       },
       "format": {},
-      "predeploy": {
+      "release": {
         "dependsOn": [
           "build",
           "test",

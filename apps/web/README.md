@@ -29,9 +29,9 @@ $ yarn run build
 
 ## Deploying
 
-You can deploy to Kubernetes using using the predeploy and deploy scripts:
+You can deploy to Kubernetes using using the `release` and `deploy` scripts:
 
 ```bash
-$ yarn run predeploy
+$ yarn run release
 $ yarn run deploy
 ```
