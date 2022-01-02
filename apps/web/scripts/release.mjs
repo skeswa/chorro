@@ -1,6 +1,6 @@
 import { execSync } from 'child_process';
 import esMain from 'es-main';
-import { join as asPath } from 'path';
+import { join as asPath, relative as asRelativePath } from 'path';
 
 import { composeDockerImageTag } from './core/dockerUtil.mjs';
 import {
@@ -113,6 +113,19 @@ export function releaseChorroWeb() {
     k8sDeploymentDocument,
     k8sDeploymentFilePath,
   });
+
+  execSync(
+    ['git add', asRelativePath(rootDirectoryPath, k8sDeploymentFilePath)].join(
+      ' ',
+    ),
+    {
+      cwd: rootDirectoryPath,
+      // Ignore stdin.
+      input: 'ignore',
+      // Pipe stdout and stderr to the terminal.
+      stdio: 'inherit',
+    },
+  );
 }
 
 /** Invokes `releaseChorroWeb` if this file was run directly. */
