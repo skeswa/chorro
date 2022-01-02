@@ -35,9 +35,10 @@ export function deployChorroWeb() {
   if (k8sDeploymentUpdate.didConfigure) {
     const { name, version } = readPackageMetadata(appDirectoryPath);
 
-    // NOTE: we do this so that `https://github.com/changesets/action`
-    // automatically recognizes that this `package` was "published"
-    // successfully.
+    // NOTE: this is a hack !skeswa added so that
+    // `https://github.com/changesets/action` automatically recognizes that this
+    // package was "published" successfully. Here, we mimic the output of a
+    // successful invocation of `changesets publish`.
     console.log(`New tag: ${name}@${version}`);
   }
 
