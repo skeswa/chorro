@@ -6,13 +6,13 @@ import "strings"
 type Environment int
 
 const (
-	// `Environment` used during local development.
+	// Environment used during local development.
 	DevEnvironment Environment = iota
-	// `Environment` used when deployed into a production setting.
+	// Environment used when deployed into a production setting.
 	ProdEnvironment
 )
 
-// Interprets `environmentString` as an `Environment`.
+// Interprets environmentString as an Environment.
 func toEnvironment(environmentString string) Environment {
 	santizedEnvironmentString := strings.ToLower(strings.TrimSpace(environmentString))
 

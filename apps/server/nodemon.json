@@ -1,0 +1,25 @@
+{
+  "env": {
+    "DB_HOST": "localhost",
+    "DB_NAME": "chorro",
+    "DB_PASS": "chorro",
+    "DB_PORT": "5432",
+    "DB_USER": "chorro",
+    "NODE_ENV": "development",
+    "PORT": "8000"
+  },
+  "execMap": {
+    "go": "go run"
+  },
+  "ext": "go,graphql,mod,sum",
+  "ignore": [
+    "**/*_test.go",
+    ".git",
+    ".turbo",
+    "build",
+    "node_modules"
+  ],
+  "restartable": "rs",
+  "signal": "SIGTERM",
+  "verbose": false
+}

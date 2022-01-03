@@ -10,9 +10,11 @@ import (
 )
 
 func main() {
-	c, err := config.ReadConfig()
-	if err != nil {
-		log.Fatalln("Failed to read configuration", err)
+	configuration, err := config.New()
+	if err == nil {
+		fmt.Printf("Configuration:\n%+v\n", configuration)
+	} else {
+		log.Fatalln("Failed to read configuration:", err)
 	}
 
 	app := fiber.New()
@@ -27,5 +29,5 @@ func main() {
 		return c.SendString("Hello, API 👋!")
 	})
 
-	app.Listen(fmt.Sprintf(":%d", c.HttpPort))
+	app.Listen(fmt.Sprintf(":%d", configuration.HttpPort))
 }
