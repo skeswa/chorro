@@ -20,7 +20,7 @@
 </script>
 
 <script lang="ts">
-  export let message: string | null;
+  export let message: string       | null;
 </script>
 
 <h1>Message</h1>
