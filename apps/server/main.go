@@ -17,16 +17,14 @@ func main() {
 
 	app := fiber.New()
 
-	if c.Environment == config.DevEnvironment {
-		fmt.Println("dev modddeeee")
-		app.Use(cors.New(cors.Config{
-			// Allow requests from the web frontend locally.
-			AllowOrigins: "http://localhost:3000",
-		}))
-	}
+	app.Use(cors.New())
 
 	app.Get("/", func(c *fiber.Ctx) error {
 		return c.SendString("Hello, World 👋!")
+	})
+
+	app.Get("/api", func(c *fiber.Ctx) error {
+		return c.SendString("Hello, API 👋!")
 	})
 
 	app.Listen(fmt.Sprintf(":%d", c.HttpPort))
