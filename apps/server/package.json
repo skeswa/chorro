@@ -1,0 +1,14 @@
+{
+  "name": "@chorro/server",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Backend for chorro.app",
+  "license": "MIT",
+  "scripts": {
+    "build": "go build -o ./build/server",
+    "dev": "go run main.go",
+    "format": "go fmt",
+    "lint": "go vet",
+    "test": "go test"
+  }
+}

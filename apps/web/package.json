@@ -2,6 +2,8 @@
   "name": "@chorro/web",
   "private": true,
   "version": "0.1.3",
+  "description": "Web frontend for chorro.app",
+  "license": "MIT",
   "scripts": {
     "build": "svelte-kit build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
@@ -14,6 +16,7 @@
     "preview": "svelte-kit preview",
     "release": "node ./scripts/release.mjs"
   },
+  "type": "module",
   "devDependencies": {
     "@sveltejs/adapter-node": "^1.0.0-next.56",
     "@sveltejs/kit": "next",
@@ -31,7 +34,6 @@
     "tslib": "^2.3.1",
     "typescript": "^4.4.3"
   },
-  "type": "module",
   "dependencies": {
     "@fontsource/fira-mono": "^4.5.0",
     "@lukeed/uuid": "^2.0.0",
