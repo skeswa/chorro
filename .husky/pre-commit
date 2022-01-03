@@ -2,5 +2,4 @@
 . "$(dirname "$0")/_/husky.sh"
 
 yarn git-branch-is --not main
-yarn pretty-quick --staged
-sleep 1
+yarn pretty-quick
