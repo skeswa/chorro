@@ -3,3 +3,4 @@
 
 yarn git-branch-is --not main
 yarn pretty-quick --staged
+sleep 1
