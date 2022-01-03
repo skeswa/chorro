@@ -4,6 +4,7 @@
 # repo.
 
 FROM node:17-alpine
+LABEL org.opencontainers.image.source = "https://github.com/skeswa/chorro"
 
 # Host the app in `~/app` of the `node` user.
 WORKDIR /home/node/app

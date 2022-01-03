@@ -9,21 +9,21 @@ metadata:
     kubernetes.io/ingress.class: 'nginx'
   labels:
     app: chorro
-    component: web
-  name: chorro-web-ingress
+    component: server
+  name: chorro-server-ingress
 spec:
   tls:
     - hosts:
         - chorro.app
-      secretName: chorro-web-tls
+      secretName: chorro-server-tls
   rules:
     - host: chorro.app
       http:
         paths:
           - pathType: Prefix
-            path: '/'
+            path: '/api'
             backend:
               service:
-                name: chorro-web-service
+                name: chorro-server-service
                 port:
                   number: 80

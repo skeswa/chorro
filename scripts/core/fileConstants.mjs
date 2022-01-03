@@ -19,5 +19,8 @@ export const k8sServiceFileName = 'service.yml';
 /** File name of any `package.json`. */
 export const packageJsonFileName = 'package.json';
 
+/** Name of the `server` app directory. */
+export const serverAppDirectoryName = 'server';
+
 /** Name of the `web` app directory. */
 export const webAppDirectoryName = 'web';

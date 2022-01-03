@@ -3,13 +3,13 @@ kind: Service
 metadata:
   labels:
     app: chorro
-    component: web
-  name: chorro-web-service
+    component: server
+  name: chorro-server-service
 spec:
   type: ClusterIP
   ports:
     - port: 80
-      targetPort: 3000
+      targetPort: 8000
   selector:
     app: chorro
-    component: web
+    component: server
