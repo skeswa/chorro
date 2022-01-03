@@ -1,5 +1,12 @@
 # @chorro/web
 
+## 0.1.4
+
+### Patch Changes
+
+- de13d6c: Added a backend for Chorro - though it doesn't really do anything
+  yet...
+
 ## 0.1.3
 
 ### Patch Changes

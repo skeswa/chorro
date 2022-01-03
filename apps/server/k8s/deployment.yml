@@ -18,7 +18,7 @@ spec:
         component: server
     spec:
       containers:
-        - image: ghcr.io/skeswa/chorro-server:0.0.1
+        - image: ghcr.io/skeswa/chorro-server:0.0.2
           name: chorro-server
           ports:
             - containerPort: 8000
