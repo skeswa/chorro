@@ -1,3 +1,5 @@
+.env
 .npmrc
 .turbo
 node_modules
+NOTES.md
