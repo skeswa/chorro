@@ -1,4 +1,6 @@
+.env
 .svelte-kit
+.turbo
 build
 node_modules
 npm-debug.log

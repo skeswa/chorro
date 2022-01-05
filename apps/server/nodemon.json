@@ -1,0 +1,10 @@
+{
+  "execMap": {
+    "go": "go run"
+  },
+  "ext": "go,graphql,mod,sum",
+  "ignore": ["**/*_test.go", ".git", ".turbo", "build", "node_modules"],
+  "restartable": "rs",
+  "signal": "SIGTERM",
+  "verbose": false
+}
