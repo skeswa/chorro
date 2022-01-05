@@ -1,5 +1,3 @@
-# NOTE: though this `Dockerfile` assumes that `yarn build` was just invoked.
-
 # NOTE: though this `Dockerfile` assumes the cwd is the root directory of the
 # repo.
 

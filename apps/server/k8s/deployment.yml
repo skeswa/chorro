@@ -18,7 +18,58 @@ spec:
         component: server
     spec:
       containers:
-        - image: ghcr.io/skeswa/chorro-server:0.0.2
+        - env:
+            - name: GOOGLE_CLIENT_ID
+              valueFrom:
+                secretKeyRef:
+                  key: googleClientId
+                  name: chorro-secret
+            - name: GOOGLE_SECRET
+              valueFrom:
+                secretKeyRef:
+                  key: googleSecret
+                  name: chorro-secret
+            - name: POSTGRES_DATABASE_NAME
+              valueFrom:
+                secretKeyRef:
+                  key: postgresDatabaseName
+                  name: chorro-secret
+            - name: POSTGRES_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: postgresHost
+                  name: chorro-secret
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: postgresPassword
+                  name: chorro-secret
+            - name: POSTGRES_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: postgresPort
+                  name: chorro-secret
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  key: postgresUser
+                  name: chorro-secret
+            - name: REDIS_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: redisHost
+                  name: chorro-secret
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: redisPassword
+                  name: chorro-secret
+            - name: REDIS_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: redisPort
+                  name: chorro-secret
+          image: ghcr.io/skeswa/chorro-server:0.0.2
           name: chorro-server
           ports:
             - containerPort: 8000

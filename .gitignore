@@ -1,4 +1,6 @@
 .env
+.env.*
+!.env.example
 .npmrc
 .turbo
 node_modules

@@ -5,7 +5,7 @@
   "description": "Web frontend for chorro.app",
   "license": "MIT",
   "scripts": {
-    "build": "VITE_API_BASE_URL=\"https://chorro.app/api\" svelte-kit build",
+    "build": "VITE_SERVER_BASE_URL=\"https://chorro.app/api\" svelte-kit build",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "deploy": "node ./scripts/deploy.mjs",

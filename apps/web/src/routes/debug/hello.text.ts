@@ -4,13 +4,13 @@ import type { Locals } from '$lib/types';
 
 // GET /debug/hello.text
 export const get: RequestHandler<Locals> = async () => {
-  const { apiBaseUrl } = config;
-  if (!apiBaseUrl) {
+  const { serverBaseUrl } = config;
+  if (!serverBaseUrl) {
     return { body: 'oops' };
   }
 
   try {
-    const response = await fetch(apiBaseUrl);
+    const response = await fetch(`${serverBaseUrl}/api`);
 
     if (!response.ok) {
       return { body: 'oh no!' };
