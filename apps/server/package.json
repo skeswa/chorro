@@ -5,7 +5,7 @@
   "description": "Backend for chorro.app",
   "license": "MIT",
   "scripts": {
-    "build": "GOOS=linux GOARCH=amd64 go build -o ./build/server-linux-arm64",
+    "build": "GOOS=linux GOARCH=amd64 go build -o ./build/server-linux-amd64",
     "deploy": "node ./scripts/deploy.mjs",
     "dev": "dotenv nodemon main.go",
     "format": "go fmt",

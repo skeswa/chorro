@@ -10,7 +10,7 @@ LABEL org.opencontainers.image.source = "https://github.com/skeswa/chorro"
 WORKDIR /app
 
 # Copy over the compiled binary for the target platform.
-COPY ./apps/server/build/server-linux-arm64 ./server
+COPY ./apps/server/build/server-linux-amd64 ./server
 
 # Specify that we're running in production.
 ENV NODE_ENV production
