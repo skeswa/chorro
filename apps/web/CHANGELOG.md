@@ -1,5 +1,13 @@
 # @chorro/web
 
+## 0.1.5
+
+### Patch Changes
+
+- 9117eb0: Started using .env files to manage local environment variables.
+- 9117eb0: We now have a placeholder logo that I hacked together in a code
+  editor with a blindfold on.
+
 ## 0.1.4
 
 ### Patch Changes
