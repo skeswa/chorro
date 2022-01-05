@@ -1,5 +1,18 @@
 # @chorro/server
 
+## 0.1.0
+
+### Minor Changes
+
+- 9117eb0: Server is now capable of authenticating against Google via OAuth 2.0.
+
+### Patch Changes
+
+- 9117eb0: Server now reloads upon file change while in development.
+- 9117eb0: Started using .env files to manage local environment variables.
+- 9117eb0: We now have a placeholder logo that I hacked together in a code
+  editor with a blindfold on.
+
 ## 0.0.2
 
 ### Patch Changes
