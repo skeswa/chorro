@@ -7,10 +7,14 @@ Go application that interfacing between Chorro's frontends and its database
 
 ### Pre-requisites
 
-- [Git](https://git-scm.com/) 2.34+
-- [Go](https://go.dev/) v1.17.5+
-- [Node.js](https://nodejs.dev/) v17+
-- [Yarn](https://nodejs.dev/) v1.22+
+- Tools & Launguages
+  - [Git](https://git-scm.com/) 2.34+
+  - [Go](https://go.dev/) v1.17.5+
+  - [Node.js](https://nodejs.dev/) v17+
+  - [Yarn](https://nodejs.dev/) v1.22+
+- Databases
+  - [Postgres](https://www.postgresql.org/) v14.1
+  - [Redis](https://www.postgresql.org/) v6+
 
 Once you've installed [Go](https://go.dev/learn/), start the development server:
 

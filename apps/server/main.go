@@ -40,6 +40,8 @@ func main() {
 	app.Get("/auth/:provider/callback", func(ctx *fiber.Ctx) error {
 		user, err := goth_fiber.CompleteUserAuth(ctx)
 		if err != nil {
+			log.Println("Failed to complete user auth:", err)
+
 			return ctx.SendString("wtf")
 		}
 
