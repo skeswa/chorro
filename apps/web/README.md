@@ -58,3 +58,8 @@ You can deploy to Kubernetes using using the `release` and `deploy` scripts:
 $ yarn release
 $ yarn deploy
 ```
+
+## Future
+
+In future, it would make a whole lot of sense to deploy to
+https://developers.cloudflare.com/workers.
