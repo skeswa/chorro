@@ -1,5 +1,12 @@
 # @chorro/web
 
+## 0.1.6
+
+### Patch Changes
+
+- 480a7d1: Made `yarn changeset` and `yarn reset` work in every individual
+  package.
+
 ## 0.1.5
 
 ### Patch Changes
