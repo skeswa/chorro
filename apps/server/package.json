@@ -11,6 +11,7 @@
     "format": "go fmt",
     "lint": "go vet",
     "release": "node ./scripts/release.mjs",
+    "reset": "git checkout main && git pull && git-delete-squashed main",
     "test": "go test"
   },
   "devDependencies": {
