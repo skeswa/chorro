@@ -1,5 +1,16 @@
 # @chorro/server
 
+## 0.2.0
+
+### Minor Changes
+
+- 480a7d1: Enabled session management in the server.
+
+### Patch Changes
+
+- 480a7d1: Made `yarn changeset` and `yarn reset` work in every individual
+  package.
+
 ## 0.1.0
 
 ### Minor Changes
