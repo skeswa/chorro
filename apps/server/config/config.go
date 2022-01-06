@@ -33,16 +33,6 @@ type Config struct {
 	Redis RedisConfig
 }
 
-// Returns the base URL that external clients will use to reach this server over
-// HTTP(s).
-func (c *Config) PublicBaseUrl() string {
-	if c.Environment == DevEnvironment {
-		return fmt.Sprintf("http://localhost:%d", c.HttpPort)
-	}
-
-	return "https://chorro.app"
-}
-
 // Settings and other values that affect how the server should interface with
 // Postgres.
 type PostgresConfig struct {
