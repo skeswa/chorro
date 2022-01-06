@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "GOOS=linux GOARCH=amd64 go build -o ./build/server-linux-amd64",
+    "changeset": "cd .. && cd .. && yarn run changeset",
     "deploy": "node ./scripts/deploy.mjs",
     "dev": "dotenv nodemon main.go",
     "format": "go fmt",

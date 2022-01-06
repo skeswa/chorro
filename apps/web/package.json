@@ -6,6 +6,7 @@
   "license": "MIT",
   "scripts": {
     "build": "VITE_SERVER_BASE_URL=\"https://chorro.app/api\" svelte-kit build",
+    "changeset": "cd .. && cd .. && yarn run changeset",
     "check": "svelte-check --tsconfig ./tsconfig.json",
     "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
     "deploy": "node ./scripts/deploy.mjs",
