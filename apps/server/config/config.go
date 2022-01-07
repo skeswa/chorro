@@ -25,6 +25,8 @@ type Config struct {
 	Environment Environment
 	// Port over which HTTP requests should be serviced.
 	HttpPort int
+	// URL of the home page.
+	HomeUrl string
 	// Settings and other values that affect how the server should interface with
 	// Postgres.
 	Postgres PostgresConfig
@@ -78,6 +80,12 @@ func New() (Config, error) {
 			},
 
 			// General flags.
+			&cli.StringFlag{
+				EnvVars: []string{"HOME_URL"},
+				Name:    homeUrlFlagName,
+				Usage:   "URL of the home page",
+				Value:   "/",
+			},
 			&cli.StringFlag{
 				Aliases: []string{"e"},
 				EnvVars: []string{"NODE_ENV"},
@@ -160,6 +168,7 @@ const (
 
 	// General flag names.
 	environmentFlagName = "environment"
+	homeUrlFlagName     = "home-url"
 	portFlagName        = "port"
 
 	// Postgres flag names.
@@ -182,6 +191,10 @@ func (config *Config) init(c *cli.Context) error {
 	}
 
 	config.Environment = toEnvironment(c.String(environmentFlagName))
+
+	if config.HomeUrl = c.String(homeUrlFlagName); len(config.HomeUrl) < 1 {
+		return fmt.Errorf("%s is not a valid %s", config.HomeUrl, homeUrlFlagName)
+	}
 
 	if config.HttpPort = c.Int(portFlagName); !isValidPort(config.HttpPort) {
 		return fmt.Errorf("%d is not a valid %s", config.HttpPort, portFlagName)

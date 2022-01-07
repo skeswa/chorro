@@ -16,22 +16,30 @@ Go application that interfacing between Chorro's frontends and its database
   - [Postgres](https://www.postgresql.org/) v14.1
   - [Redis](https://www.postgresql.org/) v6+
 
-Once you've installed [Go](https://go.dev/learn/), start the development server:
+### Getting Started
+
+1.  Create a Postgres database, user, and password for Chorro
+    [guide](https://medium.com/coding-blocks/creating-user-database-and-adding-access-on-postgresql-8bfcd2f4a91e)
+2.  Create a `.env` file with environment variables that suit your particular
+    setup - use the included `./env.example` as a starting point:
+
+    ```bash
+    $ cp ./env.example .env
+    ```
+
+3.  You need to make sure you download all the necessary Go dependencies
+
+    ```bash
+    $ go mod download
+    ```
+
+### Running the dev server
+
+The dev server should restart if its source code is changed while it is running:
 
 ```bash
 $ yarn dev
 ```
-
-### Getting Started
-
-```bash
-$ go mod download
-```
-
-Before you run the dev server, you'll first need to create a `.env` file with
-environment variables that suit your particular setup. As a starting point,
-simply copy over the included `./env.example` and then tweak it to your heart's
-content:
 
 ## Building the self-contained binary
 
