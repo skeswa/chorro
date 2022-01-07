@@ -24,10 +24,6 @@ type User struct {
 
 // Column names of the fields belonging to User.
 var UserColumnNames = userColumnNamesType{
-	// CreatedAt: ModelColumnNames.CreatedAt,
-	// DeletedAt: ModelColumnNames.DeletedAt,
-	// ID:        ID,
-	// UpdatedAt: "updated_at",
 	AvatarURL: "avatar_url",
 	Email:     "email",
 	FirstName: "first_name",
