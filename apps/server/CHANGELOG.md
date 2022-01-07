@@ -1,5 +1,12 @@
 # @chorro/server
 
+## 0.2.1
+
+### Patch Changes
+
+- 1761a4b: Got connection to Postgres up and running - next stop, GraphQL
+  station!
+
 ## 0.2.0
 
 ### Minor Changes
