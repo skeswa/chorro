@@ -7,6 +7,7 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/storage/redis"
+	"gorm.io/gorm"
 )
 
 // Returns a configuration struct for Fiber's Redis storage adapter.
@@ -44,6 +45,29 @@ func (c *Config) ForFiberSession(storage fiber.Storage) session.Config {
 		KeyLookup:    "cookie:sid",
 		Storage:      storage,
 	}
+}
+
+// Returns a configuration struct for Gorm.
+func (c *Config) ForGorm() *gorm.Config {
+	return &gorm.Config{}
+}
+
+// Returns a DSN for connecting Gorm to Postgres.
+func (c *Config) ForGormPostgresDriver() string {
+	return fmt.Sprintf(
+		"host=%s "+
+			"user=%s "+
+			"password=%s "+
+			"dbname=%s "+
+			"port=%d "+
+			"sslmode=disable "+
+			"TimeZone=America/New_York",
+		c.Postgres.Host,
+		c.Postgres.User,
+		c.Postgres.Password,
+		c.Postgres.DatabaseName,
+		c.Postgres.Port,
+	)
 }
 
 // Returns the base URL that external clients will use to reach this server over
