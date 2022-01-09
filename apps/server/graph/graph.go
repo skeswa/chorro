@@ -7,8 +7,8 @@ import (
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
-	"github.com/skeswa/chorro/apps/server/graph/generated/server"
 	"github.com/skeswa/chorro/apps/server/graph/resolver"
+	"github.com/skeswa/chorro/apps/server/graph/server"
 )
 
 // Initialize everything GraphQL related for the server.
