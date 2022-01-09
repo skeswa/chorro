@@ -20,21 +20,21 @@ func main() {
 	runtime.GOMAXPROCS(runtime.NumCPU())
 
 	// Read configuration from the environment and arguments.
-	configuration, err := config.New()
+	config, err := config.New()
 	if err != nil {
 		log.Fatalln("Failed to read configuration:", err)
 	} else {
-		fmt.Printf("Configuration:\n%+v\n", configuration)
+		fmt.Printf("Config:\n%+v\n", config)
 	}
 
 	// Connect to the cache.
-	cache, err := cache.New(&configuration)
+	cache, err := cache.New(config)
 	if err != nil {
 		log.Fatalln("Failed to connect to the cache:", err)
 	}
 
 	// Connect to the database.
-	db, err := db.New(&configuration)
+	db, err := db.New(config)
 	if err != nil {
 		log.Fatalln("Failed to connect to the database:", err)
 	}
@@ -43,10 +43,10 @@ func main() {
 	mux := http.NewServeMux()
 
 	// Hook up authentication.
-	auth.Setup(cache, &configuration, db, mux)
+	auth.Setup(cache, config, db, mux)
 
 	// Hook up the GraphQL API.
-	graph.Setup(mux)
+	graph.Setup(cache, mux)
 
 	// Routed used to test that the server is up. This will likely disappear in
 	// future.
@@ -90,13 +90,16 @@ func main() {
 	})
 
 	// Setup CORS middleware.
-	cors := cors.New(configuration.ForCors())
+	cors := cors.New(config.ForCors())
 	muxWithCors := cors.Handler(mux)
 
 	// Arrite! Time to start 'er up.
 	fmt.Println()
-	log.Printf("HTTP server listening on port %d...\n", configuration.HttpPort)
-	if err := http.ListenAndServe(fmt.Sprintf(":%d", configuration.HttpPort), muxWithCors); err != nil {
+	log.Printf("HTTP server listening on port %d...\n", config.HttpPort)
+	if err := http.ListenAndServe(
+		fmt.Sprintf(":%d", config.HttpPort),
+		muxWithCors,
+	); err != nil {
 		log.Fatalln("Failed to start the server:", err)
 	}
 }

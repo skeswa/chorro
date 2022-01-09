@@ -21,8 +21,8 @@ type Cache struct {
 }
 
 // Creates and initializes a new Cache.
-func New(configuration *config.Config) (*Cache, error) {
-	client := redis.NewClient(configuration.ForRedis())
+func New(config *config.Config) (*Cache, error) {
+	client := redis.NewClient(config.ForRedis())
 
 	// As sessions are stored in the cache, we create an instance of the
 	// gorilla/sessions here for Redis.
@@ -33,7 +33,7 @@ func New(configuration *config.Config) (*Cache, error) {
 
 	// Before the session store can be used, it must be configured.
 	sessionStore.KeyPrefix("chorro_")
-	sessionStore.Options(configuration.ForSessionStore())
+	sessionStore.Options(config.ForSessionStore())
 
 	return &Cache{
 		client:       client,

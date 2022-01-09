@@ -17,7 +17,7 @@ import (
 // Initialize everything authentication related for the server.
 func Setup(
 	cache *cache.Cache,
-	configuration *config.Config,
+	config *config.Config,
 	db *db.DB,
 	mux *http.ServeMux,
 ) {
@@ -26,10 +26,10 @@ func Setup(
 
 	// Support for "Login With Google".
 	googleAuthProvider := google.New(
-		configuration.Auth.GoogleOAuth2ClientID,
-		configuration.Auth.GoogleOAuth2ClientSecret,
+		config.Auth.GoogleOAuth2ClientID,
+		config.Auth.GoogleOAuth2ClientSecret,
 		// Fully-qualified Google auth callback endpoint URL:
-		configuration.PublicBaseUrl()+loginWithGoogleAuthCallbackRoute,
+		config.PublicBaseUrl()+loginWithGoogleAuthCallbackRoute,
 		// Google OAuth 2.0 scopes:
 		"email", "profile",
 	)
@@ -43,7 +43,7 @@ func Setup(
 	}
 
 	// Where we redirect if authentication fails for any reason.
-	homeUrlWithAuthFailureFlag := fmt.Sprintf("%s?auth=failed", configuration.HomeUrl)
+	homeUrlWithAuthFailureFlag := fmt.Sprintf("%s?auth=failed", config.HomeUrl)
 
 	// Starts the "Login With Google" flow if the user isn't already logged in.
 	mux.HandleFunc("/login", func(responseWriter http.ResponseWriter, request *http.Request) {
@@ -58,7 +58,7 @@ func Setup(
 
 		// Go back home if the user is already logged in.
 		if couldSkipAuth(
-			configuration,
+			config,
 			db,
 			request,
 			responseWriter,
@@ -76,7 +76,7 @@ func Setup(
 
 		// Go back home if the user is already logged in.
 		if couldSkipAuth(
-			configuration,
+			config,
 			db,
 			request,
 			responseWriter,
@@ -164,7 +164,7 @@ func Setup(
 		http.Redirect(
 			responseWriter,
 			request,
-			configuration.HomeUrl,
+			config.HomeUrl,
 			http.StatusFound,
 		)
 	})
@@ -175,7 +175,7 @@ func Setup(
 //
 // This function returns true if short circuiting succeeded.
 func couldSkipAuth(
-	configuration *config.Config,
+	config *config.Config,
 	db *db.DB,
 	request *http.Request,
 	responseWriter http.ResponseWriter,
@@ -186,7 +186,7 @@ func couldSkipAuth(
 			http.Redirect(
 				responseWriter,
 				request,
-				configuration.HomeUrl,
+				config.HomeUrl,
 				http.StatusFound,
 			)
 

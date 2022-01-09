@@ -62,7 +62,7 @@ type RedisConfig struct {
 }
 
 // Reads Config from the environment and command line arguments.
-func New() (Config, error) {
+func New() (*Config, error) {
 	config := Config{}
 
 	if err := (&cli.App{
@@ -155,10 +155,10 @@ func New() (Config, error) {
 			return config.init(c)
 		},
 	}).Run(os.Args); err != nil {
-		return config, err
+		return nil, err
 	}
 
-	return config, nil
+	return &config, nil
 }
 
 const (
