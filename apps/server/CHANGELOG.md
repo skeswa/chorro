@@ -1,5 +1,12 @@
 # @chorro/server
 
+## 0.3.0
+
+### Minor Changes
+
+- 0592283: Added a GraphQL API (and a playground too) while ditching gofiber.io
+  in favor of plain vanilla Go `net/http`.
+
 ## 0.2.1
 
 ### Patch Changes
