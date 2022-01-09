@@ -15,7 +15,7 @@ type DB struct {
 }
 
 // Creates and initializes a new DB.
-func New(configuration config.Config) (*DB, error) {
+func New(configuration *config.Config) (*DB, error) {
 	client, err := gorm.Open(
 		postgres.Open(configuration.ForGormPostgresDriver()),
 		configuration.ForGorm(),
