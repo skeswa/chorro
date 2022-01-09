@@ -36,7 +36,7 @@ COPY --from=builder /app/server ./server
 ENV NODE_ENV production
 
 # Specify other miscellaneous application configuration.
-ENV HOME_URL https://chorro.app/
+ENV HOME_URL https://chorro.app
 
 # Specify that we're running on port 8000.
 ENV PORT 8000

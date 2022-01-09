@@ -41,6 +41,34 @@ The dev server should restart if its source code is changed while it is running:
 $ yarn dev
 ```
 
+### Codegen
+
+We use [gqlgen](https://gqlgen.com/) to generate a lot of the code in the
+`server/graphql` directory. Some files in this `server/graphql` are purely
+written by humans, others are purely generated, and some others are sort of
+co-written by humans and code generator. In general,
+
+- Any file named `generated.go` is purely generated
+- Any `*.graphql` file
+- All `*.resolves.go` files have their structure generated and their
+  implementations written by hand
+
+#### Updating `server/graph`
+
+You will need to re-run codegen after changing anything in:
+
+- `server/graphql/model`, or
+- `server/graphql/schema`
+
+We use `go generate` to run codegen:
+
+```bash
+$ go generate ./...
+```
+
+For guidance on tweaking anything `server/graph`, check out
+[gqlgen's Getting Started guide](https://gqlgen.com/getting-started/).
+
 ## Building the self-contained binary
 
 You can generate the self-contained, compiled Go binary within the `./build`
