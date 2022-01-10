@@ -27,17 +27,3 @@ spec:
                 name: chorro-server-service
                 port:
                   number: 80
-          - pathType: Prefix
-            path: '/auth'
-            backend:
-              service:
-                name: chorro-server-service
-                port:
-                  number: 80
-          - pathType: Prefix
-            path: '/login'
-            backend:
-              service:
-                name: chorro-server-service
-                port:
-                  number: 80
