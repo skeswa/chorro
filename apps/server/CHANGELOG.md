@@ -1,5 +1,11 @@
 # @chorro/server
 
+## 0.3.1
+
+### Patch Changes
+
+- 81dab59: The GraphQL API now does real stuff which is pretty cool.
+
 ## 0.3.0
 
 ### Minor Changes
