@@ -24,7 +24,6 @@
     "pipeline": {
       "build": {
         "dependsOn": [
-          "lint",
           "^build"
         ]
       },
@@ -37,18 +36,18 @@
       "lint": {
         "outputs": []
       },
-      "format": {},
+      "format": {
+        "cache": false
+      },
       "release": {
         "dependsOn": [
-          "build",
-          "test",
-          "lint"
+          "test"
         ],
         "outputs": []
       },
       "test": {
         "dependsOn": [
-          "build"
+          "lint"
         ]
       }
     }
