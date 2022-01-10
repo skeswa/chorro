@@ -1,3 +1,10 @@
+"""
+Enumerates every imperative change intents exposed by this API.
+"""
 type Mutation {
-  createTodo(input: NewTodo!): Todo!
+  """
+  Logs out the currently authenticated user, returning true if the session was
+  ended successfully.
+  """
+  logOut: Boolean!
 }

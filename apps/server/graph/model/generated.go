@@ -2,12 +2,17 @@
 
 package model
 
-type NewTodo struct {
-	Text   string `json:"text"`
-	UserID string `json:"userId"`
-}
-
+// An individual user registered with Chorro.
 type User struct {
-	ID   string `json:"id"`
-	Name string `json:"name"`
+	// Email address of this User.
+	//
+	// Can be null if the currently authenticated User does not have access to this
+	// information.
+	Email *string `json:"email"`
+	// First name of this User.
+	FirstName string `json:"firstName"`
+	// Uniquely identifies this User.
+	ID string `json:"id"`
+	// First name of this User.
+	LastName string `json:"lastName"`
 }

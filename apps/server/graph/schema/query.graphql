@@ -1,3 +1,12 @@
+"""
+Root type for all the "questions" made answerable by this API.
+"""
 type Query {
-  todos: [Todo!]!
+  """
+  Selects the authenticated user.
+
+  Can be null if the currently authenticated User does not have access to this
+  information.
+  """
+  me: User
 }

@@ -1,4 +1,24 @@
+"""
+An individual user registered with Chorro.
+"""
 type User {
+  """
+  Email address of this User.
+
+  Can be null if the currently authenticated User does not have access to this
+  information.
+  """
+  email: String
+  """
+  First name of this User.
+  """
+  firstName: String!
+  """
+  Uniquely identifies this User.
+  """
   id: ID!
-  name: String!
+  """
+  First name of this User.
+  """
+  lastName: String!
 }

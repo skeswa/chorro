@@ -54,7 +54,7 @@ func Setup(
 			return
 		}
 
-		session := session.Read(cache, request, responseWriter)
+		session := session.ExtractFrom(request.Context())
 
 		// Go back home if the user is already logged in.
 		if couldSkipAuth(
@@ -72,7 +72,7 @@ func Setup(
 
 	// Finishes the "Login With Google" flow.
 	mux.HandleFunc(loginWithGoogleAuthCallbackRoute, func(responseWriter http.ResponseWriter, request *http.Request) {
-		session := session.Read(cache, request, responseWriter)
+		session := session.ExtractFrom(request.Context())
 
 		// Go back home if the user is already logged in.
 		if couldSkipAuth(
