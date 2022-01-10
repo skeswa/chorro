@@ -1,4 +1,4 @@
-# chorro
+# chorro ![Build Health](https://github.com/skeswa/chorro/actions/workflows/release.yml/badge.svg)
 
 Chore scheduling made easy
 
