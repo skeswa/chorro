@@ -31,11 +31,36 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16'
+          cache: 'yarn'
 
       - name: Setup Go 1.17.x
         uses: actions/setup-go@v2
         with:
           go-version: '1.17.5'
+
+      # Get values for cache paths to be used in later steps:
+      # https://markphelps.me/posts/speed-up-your-go-builds-with-actions-cache/
+      - name: Get Go cache paths
+        id: go-cache-paths
+        run: |
+          echo "::set-output name=go-build::$(go env GOCACHE)"
+          echo "::set-output name=go-mod::$(go env GOMODCACHE)"
+
+      # Cache `go build` cache, used to speedup go test:
+      # https://markphelps.me/posts/speed-up-your-go-builds-with-actions-cache/
+      - name: Go Build Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.go-cache-paths.outputs.go-build }}
+          key: ${{ runner.os }}-go-build-${{ hashFiles('**/go.sum') }}
+
+      # Cache `go mod` cache, used to speedup builds:
+      # https://markphelps.me/posts/speed-up-your-go-builds-with-actions-cache/
+      - name: Go Mod Cache
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.go-cache-paths.outputs.go-mod }}
+          key: ${{ runner.os }}-go-mod-${{ hashFiles('**/go.sum') }}
 
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
