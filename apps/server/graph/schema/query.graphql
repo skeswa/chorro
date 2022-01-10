@@ -1,5 +1,9 @@
-""" Root type for all the "questions" made answerable by this API. """
+"""
+ Root type for all the "questions" made answerable by this API.
+"""
 type Query {
-  """ Selects all todos visible to the authenticated user. """
+  """
+   Selects all todos visible to the authenticated user.
+  """
   todos: [Todo!]!
 }
