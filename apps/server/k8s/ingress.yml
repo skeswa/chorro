@@ -41,4 +41,3 @@ spec:
                 name: chorro-server-service
                 port:
                   number: 80
-
