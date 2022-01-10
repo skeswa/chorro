@@ -46,7 +46,10 @@ func Setup(
 	homeUrlWithAuthFailureFlag := fmt.Sprintf("%s?auth=failed", config.HomeUrl)
 
 	// Starts the "Login With Google" flow if the user isn't already logged in.
-	mux.HandleFunc("/login", func(responseWriter http.ResponseWriter, request *http.Request) {
+	mux.HandleFunc(startLoginWithGoogleRoute, func(
+		responseWriter http.ResponseWriter,
+		request *http.Request,
+	) {
 		// GET only.
 		if request.Method != http.MethodGet {
 			responseWriter.WriteHeader(http.StatusNotFound)
@@ -71,7 +74,10 @@ func Setup(
 	})
 
 	// Finishes the "Login With Google" flow.
-	mux.HandleFunc(loginWithGoogleAuthCallbackRoute, func(responseWriter http.ResponseWriter, request *http.Request) {
+	mux.HandleFunc(loginWithGoogleAuthCallbackRoute, func(
+		responseWriter http.ResponseWriter,
+		request *http.Request,
+	) {
 		session := session.ExtractFrom(request.Context())
 
 		// Go back home if the user is already logged in.
@@ -99,9 +105,10 @@ func Setup(
 			return
 		}
 
-		if userIDOfGoogleUser, err := db.UserIDOfGoogleUser(
+		userIDOfGoogleUser, err := db.UserIDOfGoogleUser(
 			googleUser.UserID,
-		); err != nil {
+		)
+		if err != nil {
 			log.Printf(
 				"Failed to find Google User \"%s\" to complete "+
 					"\"Login With Google\": %v\n",
@@ -117,33 +124,14 @@ func Setup(
 			)
 
 			return
-		} else {
-			if userIDOfGoogleUser == nil {
-				// This is an unrecognized Google user, so we should register them.
-				if userID, err := db.RegisterGoogleUser(googleUser); err != nil {
-					log.Printf(
-						"Failed to register new Google User \"%s\" to complete "+
-							"\"Login With Google\": %v\n",
-						googleUser.UserID,
-						err,
-					)
+		}
 
-					http.Redirect(
-						responseWriter,
-						request,
-						homeUrlWithAuthFailureFlag,
-						http.StatusFound,
-					)
-
-					return
-				} else {
-					userIDOfGoogleUser = &userID
-				}
-			}
-
-			if err := session.LogIn(*userIDOfGoogleUser); err != nil {
+		// Check if this is an unrecognized Google user. If so, we should register
+		// them.
+		if userIDOfGoogleUser == nil {
+			if userID, err := db.RegisterGoogleUser(googleUser); err != nil {
 				log.Printf(
-					"Failed to login Google User \"%s\" to complete "+
+					"Failed to register new Google User \"%s\" to complete "+
 						"\"Login With Google\": %v\n",
 					googleUser.UserID,
 					err,
@@ -157,7 +145,27 @@ func Setup(
 				)
 
 				return
+			} else {
+				userIDOfGoogleUser = &userID
 			}
+		}
+
+		if err := session.LogIn(*userIDOfGoogleUser); err != nil {
+			log.Printf(
+				"Failed to login Google User \"%s\" to complete "+
+					"\"Login With Google\": %v\n",
+				googleUser.UserID,
+				err,
+			)
+
+			http.Redirect(
+				responseWriter,
+				request,
+				homeUrlWithAuthFailureFlag,
+				http.StatusFound,
+			)
+
+			return
 		}
 
 		// Looks like the user is now logged in - let's send them home.

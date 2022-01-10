@@ -11,7 +11,7 @@ import (
 var contextKey = &contextKeyType{sessionName}
 
 // Extracts the Session embedded within the specified context, panicing if no
-// such embedded Session.
+// such embedded Session exists.
 func ExtractFrom(context context.Context) *Session {
 	session, hasSession := context.Value(contextKey).(*Session)
 	if !hasSession {
