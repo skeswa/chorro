@@ -1,5 +1,11 @@
 # @chorro/server
 
+## 0.3.2
+
+### Patch Changes
+
+- 24fe76b: Moved all server endpoints under /api.
+
 ## 0.3.1
 
 ### Patch Changes
