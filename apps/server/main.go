@@ -46,59 +46,21 @@ func main() {
 	auth.Setup(cache, config, db, mux)
 
 	// Hook up the GraphQL API.
-	graph.Setup(cache, mux)
-
-	// Routed used to test that the server is up. This will likely disappear in
-	// future.
-	mux.HandleFunc("/", func(responseWriter http.ResponseWriter, request *http.Request) {
-		// GET "/"" only - everything else is a 404.
-		if request.Method != http.MethodGet || request.URL.Path != "/" {
-			responseWriter.WriteHeader(http.StatusNotFound)
-
-			return
-		}
-
-		fmt.Fprintf(responseWriter, "Hello, World 👋!\n")
-	})
-
-	// Useful debugging route that shits out the authenticated user.
-	mux.HandleFunc("/me", func(responseWriter http.ResponseWriter, request *http.Request) {
-		// GET only.
-		if request.Method != http.MethodGet {
-			responseWriter.WriteHeader(http.StatusNotFound)
-
-			return
-		}
-
-		session := session.Read(cache, request, responseWriter)
-		if !session.IsUserLoggedIn {
-			responseWriter.WriteHeader(http.StatusUnauthorized)
-
-			return
-		}
-
-		user, err := db.User(session.UserID)
-		if err != nil {
-			log.Println("/me failed:", err)
-
-			responseWriter.WriteHeader(http.StatusInternalServerError)
-
-			return
-		}
-
-		fmt.Fprintf(responseWriter, "%+v", user)
-	})
+	graph.Setup(cache, config, db, mux)
 
 	// Setup CORS middleware.
 	cors := cors.New(config.ForCors())
-	muxWithCors := cors.Handler(mux)
+
+	// Bind middleware to mux before starting our engines.
+	muxWithMiddleware := cors.Handler(mux)
+	muxWithMiddleware = session.Handler(cache, muxWithMiddleware)
 
 	// Arrite! Time to start 'er up.
 	fmt.Println()
 	log.Printf("HTTP server listening on port %d...\n", config.HttpPort)
 	if err := http.ListenAndServe(
 		fmt.Sprintf(":%d", config.HttpPort),
-		muxWithCors,
+		muxWithMiddleware,
 	); err != nil {
 		log.Fatalln("Failed to start the server:", err)
 	}

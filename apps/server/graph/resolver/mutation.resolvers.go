@@ -5,17 +5,22 @@ package resolver
 
 import (
 	"context"
-	"fmt"
 
-	"github.com/skeswa/chorro/apps/server/graph/model"
-	server1 "github.com/skeswa/chorro/apps/server/graph/server"
+	"github.com/skeswa/chorro/apps/server/graph/server"
+	"github.com/skeswa/chorro/apps/server/session"
 )
 
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *mutationResolver) LogOut(ctx context.Context) (bool, error) {
+	session := session.ExtractFrom(ctx)
+
+	if err := session.LogOut(); err != nil {
+		return false, err
+	}
+
+	return true, nil
 }
 
-// Mutation returns server1.MutationResolver implementation.
-func (r *Resolver) Mutation() server1.MutationResolver { return &mutationResolver{r} }
+// Mutation returns server.MutationResolver implementation.
+func (r *Resolver) Mutation() server.MutationResolver { return &mutationResolver{r} }
 
 type mutationResolver struct{ *Resolver }

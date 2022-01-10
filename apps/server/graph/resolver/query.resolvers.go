@@ -5,17 +5,34 @@ package resolver
 
 import (
 	"context"
-	"fmt"
+	"strconv"
 
 	"github.com/skeswa/chorro/apps/server/graph/model"
-	server1 "github.com/skeswa/chorro/apps/server/graph/server"
+	"github.com/skeswa/chorro/apps/server/graph/server"
+	"github.com/skeswa/chorro/apps/server/session"
 )
 
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented"))
+func (r *queryResolver) Me(ctx context.Context) (*model.User, error) {
+	session := session.ExtractFrom(ctx)
+
+	if !session.IsUserLoggedIn {
+		return nil, nil
+	}
+
+	user, err := r.DB.User(session.UserID)
+	if err != nil {
+		return nil, err
+	}
+
+	return &model.User{
+		Email:     &user.Email,
+		FirstName: user.FirstName,
+		ID:        strconv.FormatUint(uint64(user.ID), 10),
+		LastName:  user.LastName,
+	}, nil
 }
 
-// Query returns server1.QueryResolver implementation.
-func (r *Resolver) Query() server1.QueryResolver { return &queryResolver{r} }
+// Query returns server.QueryResolver implementation.
+func (r *Resolver) Query() server.QueryResolver { return &queryResolver{r} }
 
 type queryResolver struct{ *Resolver }

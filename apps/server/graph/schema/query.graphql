@@ -3,7 +3,10 @@ Root type for all the "questions" made answerable by this API.
 """
 type Query {
   """
-  Selects all todos visible to the authenticated user.
+  Selects the authenticated user.
+
+  Can be null if the currently authenticated User does not have access to this
+  information.
   """
-  todos: [Todo!]!
+  me: User
 }

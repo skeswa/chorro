@@ -3,7 +3,8 @@ Enumerates every imperative change intents exposed by this API.
 """
 type Mutation {
   """
-  Creates a new Todo based on the specified input.
+  Logs out the currently authenticated user, returning true if the session was
+  ended successfully.
   """
-  createTodo(input: NewTodo!): Todo!
+  logOut: Boolean!
 }

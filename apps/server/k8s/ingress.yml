@@ -41,10 +41,4 @@ spec:
                 name: chorro-server-service
                 port:
                   number: 80
-          - pathType: Prefix
-            path: '/me'
-            backend:
-              service:
-                name: chorro-server-service
-                port:
-                  number: 80
+
