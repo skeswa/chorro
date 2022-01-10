@@ -1,3 +1,5 @@
+""" Enumerates every imperative change intents exposed by this API. """
 type Mutation {
+  """ Creates a new Todo based on the specified input. """
   createTodo(input: NewTodo!): Todo!
 }

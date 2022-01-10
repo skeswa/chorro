@@ -218,23 +218,32 @@ var sources = []*ast.Source{
 	{Name: "graph/schema/inputs.graphql", Input: `input NewTodo {
   text: String!
   userId: String!
-}`, BuiltIn: false},
-	{Name: "graph/schema/mutation.graphql", Input: `type Mutation {
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/mutation.graphql", Input: `""" Enumerates every imperative change intents exposed by this API. """
+type Mutation {
+  """ Creates a new Todo based on the specified input. """
   createTodo(input: NewTodo!): Todo!
-}`, BuiltIn: false},
-	{Name: "graph/schema/query.graphql", Input: `type Query {
+}
+`, BuiltIn: false},
+	{Name: "graph/schema/query.graphql", Input: `""" Root type for all the "questions" made answerable by this API. """
+type Query {
+  """ Selects all todos visible to the authenticated user. """
   todos: [Todo!]!
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "graph/schema/todo.graphql", Input: `type Todo {
   id: ID!
   text: String!
   done: Boolean!
   user: User!
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 	{Name: "graph/schema/user.graphql", Input: `type User {
   id: ID!
   name: String!
-}`, BuiltIn: false},
+}
+`, BuiltIn: false},
 }
 var parsedSchema = gqlparser.MustLoadSchema(sources...)
 
