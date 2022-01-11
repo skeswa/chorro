@@ -6,6 +6,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"strconv"
 	"sync"
 
@@ -39,6 +40,8 @@ type ResolverRoot interface {
 }
 
 type DirectiveRoot struct {
+	Personal  func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error)
+	Protected func(ctx context.Context, obj interface{}, next graphql.Resolver) (res interface{}, err error)
 }
 
 type ComplexityRoot struct {
@@ -200,6 +203,15 @@ func (ec *executionContext) introspectType(name string) (*introspection.Type, er
 }
 
 var sources = []*ast.Source{
+	{Name: "graph/schema/directives.graphql", Input: `"""
+Directive used to restrict fields to currently authenticated user only.
+"""
+directive @personal on FIELD_DEFINITION
+
+"""
+Directive used to restrict fields to authenticated users only.
+"""
+directive @protected on FIELD_DEFINITION`, BuiltIn: false},
 	{Name: "graph/schema/mutation.graphql", Input: `"""
 Enumerates every imperative change intents exposed by this API.
 """
@@ -208,14 +220,14 @@ type Mutation {
   Logs out the currently authenticated user, returning true if the session was
   ended successfully.
   """
-  logOut: Boolean!
+  logOut: Boolean! @protected
 
   """
   Sends an email to Sandile containing the specified ` + "`" + `message` + "`" + `.
 
   Returns true if successful.
   """
-  sayHi(message: String!): Boolean!
+  sayHi(message: String!): Boolean! @protected
 }
 `, BuiltIn: false},
 	{Name: "graph/schema/query.graphql", Input: `"""
@@ -228,7 +240,7 @@ type Query {
   Can be null if the currently authenticated User does not have access to this
   information.
   """
-  me: User
+  me: User @protected
 }
 `, BuiltIn: false},
 	{Name: "graph/schema/user.graphql", Input: `"""
@@ -241,7 +253,7 @@ type User {
   Can be null if the currently authenticated User does not have access to this
   information.
   """
-  email: String
+  email: String @personal
   """
   First name of this User.
   """
@@ -348,8 +360,28 @@ func (ec *executionContext) _Mutation_logOut(ctx context.Context, field graphql.
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().LogOut(rctx)
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().LogOut(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.Protected == nil {
+				return nil, errors.New("directive protected is not implemented")
+			}
+			return ec.directives.Protected(ctx, nil, directive0)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -390,8 +422,28 @@ func (ec *executionContext) _Mutation_sayHi(ctx context.Context, field graphql.C
 	}
 	fc.Args = args
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Mutation().SayHi(rctx, args["message"].(string))
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Mutation().SayHi(rctx, args["message"].(string))
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.Protected == nil {
+				return nil, errors.New("directive protected is not implemented")
+			}
+			return ec.directives.Protected(ctx, nil, directive0)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(bool); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be bool`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -425,8 +477,28 @@ func (ec *executionContext) _Query_me(ctx context.Context, field graphql.Collect
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return ec.resolvers.Query().Me(rctx)
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return ec.resolvers.Query().Me(rctx)
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.Protected == nil {
+				return nil, errors.New("directive protected is not implemented")
+			}
+			return ec.directives.Protected(ctx, nil, directive0)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*model.User); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *github.com/skeswa/chorro/apps/server/graph/model.User`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -528,8 +600,28 @@ func (ec *executionContext) _User_email(ctx context.Context, field graphql.Colle
 
 	ctx = graphql.WithFieldContext(ctx, fc)
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
-		ctx = rctx // use context from middleware stack in children
-		return obj.Email, nil
+		directive0 := func(rctx context.Context) (interface{}, error) {
+			ctx = rctx // use context from middleware stack in children
+			return obj.Email, nil
+		}
+		directive1 := func(ctx context.Context) (interface{}, error) {
+			if ec.directives.Personal == nil {
+				return nil, errors.New("directive personal is not implemented")
+			}
+			return ec.directives.Personal(ctx, obj, directive0)
+		}
+
+		tmp, err := directive1(rctx)
+		if err != nil {
+			return nil, graphql.ErrorOnPath(ctx, err)
+		}
+		if tmp == nil {
+			return nil, nil
+		}
+		if data, ok := tmp.(*string); ok {
+			return data, nil
+		}
+		return nil, fmt.Errorf(`unexpected type %T from directive, should be *string`, tmp)
 	})
 	if err != nil {
 		ec.Error(ctx, err)

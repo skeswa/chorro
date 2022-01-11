@@ -6,12 +6,12 @@ type Mutation {
   Logs out the currently authenticated user, returning true if the session was
   ended successfully.
   """
-  logOut: Boolean!
+  logOut: Boolean! @protected
 
   """
   Sends an email to Sandile containing the specified `message`.
 
   Returns true if successful.
   """
-  sayHi(message: String!): Boolean!
+  sayHi(message: String!): Boolean! @protected
 }

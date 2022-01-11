@@ -8,7 +8,7 @@ type User {
   Can be null if the currently authenticated User does not have access to this
   information.
   """
-  email: String
+  email: String @personal
   """
   First name of this User.
   """

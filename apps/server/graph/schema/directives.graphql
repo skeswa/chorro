@@ -1,0 +1,9 @@
+"""
+Directive used to restrict fields to currently authenticated user only.
+"""
+directive @personal on FIELD_DEFINITION
+
+"""
+Directive used to restrict fields to authenticated users only.
+"""
+directive @protected on FIELD_DEFINITION
