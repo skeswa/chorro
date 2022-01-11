@@ -8,5 +8,5 @@ type Query {
   Can be null if the currently authenticated User does not have access to this
   information.
   """
-  me: User
+  me: User @protected
 }

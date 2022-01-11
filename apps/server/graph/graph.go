@@ -10,6 +10,7 @@ import (
 	"github.com/skeswa/chorro/apps/server/cache"
 	"github.com/skeswa/chorro/apps/server/config"
 	"github.com/skeswa/chorro/apps/server/db"
+	"github.com/skeswa/chorro/apps/server/graph/directive"
 	"github.com/skeswa/chorro/apps/server/graph/resolver"
 	"github.com/skeswa/chorro/apps/server/graph/server"
 	"github.com/skeswa/chorro/apps/server/mailer"
@@ -57,6 +58,10 @@ func Setup(
 	})
 
 	executableSchema := server.NewExecutableSchema(server.Config{
+		Directives: server.DirectiveRoot{
+			Personal:  directive.Personal,
+			Protected: directive.Protected,
+		},
 		Resolvers: resolver,
 	})
 	graphQLServer := handler.NewDefaultServer(executableSchema)
