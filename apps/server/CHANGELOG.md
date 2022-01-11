@@ -1,5 +1,11 @@
 # @chorro/server
 
+## 0.4.0
+
+### Minor Changes
+
+- cd6ffee: Taught the server how to send transactional emails.
+
 ## 0.3.2
 
 ### Patch Changes
