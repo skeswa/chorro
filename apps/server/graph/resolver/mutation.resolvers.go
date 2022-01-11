@@ -7,6 +7,7 @@ import (
 	"context"
 
 	"github.com/skeswa/chorro/apps/server/graph/server"
+	"github.com/skeswa/chorro/apps/server/mailer"
 	"github.com/skeswa/chorro/apps/server/session"
 )
 
@@ -14,6 +15,18 @@ func (r *mutationResolver) LogOut(ctx context.Context) (bool, error) {
 	session := session.ExtractFrom(ctx)
 
 	if err := session.LogOut(); err != nil {
+		return false, err
+	}
+
+	return true, nil
+}
+
+func (r *mutationResolver) SayHi(ctx context.Context, message string) (bool, error) {
+	if err := r.Mailer.Send(mailer.SendOptions{
+		Message:        message,
+		Subject:        "This is a test",
+		ToEmailAddress: "sandile.keswa@gmail.com",
+	}); err != nil {
 		return false, err
 	}
 

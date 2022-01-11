@@ -20,7 +20,7 @@ type Cache struct {
 	client *redis.Client
 }
 
-// Creates and initializes a new Cache.
+// Creates and initializes a new Cache based on the specified config.
 func New(config *config.Config) (*Cache, error) {
 	client := redis.NewClient(config.ForRedis())
 

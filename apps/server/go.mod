@@ -4,6 +4,8 @@ go 1.17
 
 require (
 	github.com/99designs/gqlgen v0.14.0
+	github.com/emersion/go-sasl v0.0.0-20211008083017-0b9dcfb154ac
+	github.com/emersion/go-smtp v0.15.0
 	github.com/go-redis/redis/v8 v8.11.4
 	github.com/gorilla/sessions v1.2.0
 	github.com/markbates/goth v1.68.0

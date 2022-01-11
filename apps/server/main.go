@@ -12,6 +12,7 @@ import (
 	"github.com/skeswa/chorro/apps/server/config"
 	"github.com/skeswa/chorro/apps/server/db"
 	"github.com/skeswa/chorro/apps/server/graph"
+	"github.com/skeswa/chorro/apps/server/mailer"
 	"github.com/skeswa/chorro/apps/server/session"
 )
 
@@ -39,6 +40,9 @@ func main() {
 		log.Fatalln("Failed to connect to the database:", err)
 	}
 
+	// Connect to the mail sending service.
+	mailer := mailer.New(config)
+
 	// Create a new, non-default HTTP serving multiplexer so we can mess with it.
 	mux := http.NewServeMux()
 
@@ -46,7 +50,7 @@ func main() {
 	auth.Setup(cache, config, db, mux)
 
 	// Hook up the GraphQL API.
-	graph.Setup(cache, config, db, mux)
+	graph.Setup(cache, config, db, mailer, mux)
 
 	// Setup CORS middleware.
 	cors := cors.New(config.ForCors())

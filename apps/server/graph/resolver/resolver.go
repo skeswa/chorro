@@ -4,6 +4,7 @@ import (
 	"github.com/skeswa/chorro/apps/server/cache"
 	"github.com/skeswa/chorro/apps/server/config"
 	"github.com/skeswa/chorro/apps/server/db"
+	"github.com/skeswa/chorro/apps/server/mailer"
 )
 
 // Core type available to every GraphQL resolver.
@@ -21,4 +22,6 @@ type Resolver struct {
 	Config *config.Config
 	// Interface between the server and its primary data store.
 	DB *db.DB
+	// Interface between the server and the service it uses to send emails.
+	Mailer *mailer.Mailer
 }

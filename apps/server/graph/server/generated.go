@@ -44,6 +44,7 @@ type DirectiveRoot struct {
 type ComplexityRoot struct {
 	Mutation struct {
 		LogOut func(childComplexity int) int
+		SayHi  func(childComplexity int, message string) int
 	}
 
 	Query struct {
@@ -60,6 +61,7 @@ type ComplexityRoot struct {
 
 type MutationResolver interface {
 	LogOut(ctx context.Context) (bool, error)
+	SayHi(ctx context.Context, message string) (bool, error)
 }
 type QueryResolver interface {
 	Me(ctx context.Context) (*model.User, error)
@@ -86,6 +88,18 @@ func (e *executableSchema) Complexity(typeName, field string, childComplexity in
 		}
 
 		return e.complexity.Mutation.LogOut(childComplexity), true
+
+	case "Mutation.sayHi":
+		if e.complexity.Mutation.SayHi == nil {
+			break
+		}
+
+		args, err := ec.field_Mutation_sayHi_args(context.TODO(), rawArgs)
+		if err != nil {
+			return 0, false
+		}
+
+		return e.complexity.Mutation.SayHi(childComplexity, args["message"].(string)), true
 
 	case "Query.me":
 		if e.complexity.Query.Me == nil {
@@ -195,6 +209,13 @@ type Mutation {
   ended successfully.
   """
   logOut: Boolean!
+
+  """
+  Sends an email to Sandile containing the specified ` + "`" + `message` + "`" + `.
+
+  Returns true if successful.
+  """
+  sayHi(message: String!): Boolean!
 }
 `, BuiltIn: false},
 	{Name: "graph/schema/query.graphql", Input: `"""
@@ -241,6 +262,21 @@ var parsedSchema = gqlparser.MustLoadSchema(sources...)
 // endregion ************************** generated!.gotpl **************************
 
 // region    ***************************** args.gotpl *****************************
+
+func (ec *executionContext) field_Mutation_sayHi_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
+	var err error
+	args := map[string]interface{}{}
+	var arg0 string
+	if tmp, ok := rawArgs["message"]; ok {
+		ctx := graphql.WithPathContext(ctx, graphql.NewPathWithField("message"))
+		arg0, err = ec.unmarshalNString2string(ctx, tmp)
+		if err != nil {
+			return nil, err
+		}
+	}
+	args["message"] = arg0
+	return args, nil
+}
 
 func (ec *executionContext) field_Query___type_args(ctx context.Context, rawArgs map[string]interface{}) (map[string]interface{}, error) {
 	var err error
@@ -314,6 +350,48 @@ func (ec *executionContext) _Mutation_logOut(ctx context.Context, field graphql.
 	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
 		ctx = rctx // use context from middleware stack in children
 		return ec.resolvers.Mutation().LogOut(rctx)
+	})
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	if resTmp == nil {
+		if !graphql.HasFieldError(ctx, fc) {
+			ec.Errorf(ctx, "must not be null")
+		}
+		return graphql.Null
+	}
+	res := resTmp.(bool)
+	fc.Result = res
+	return ec.marshalNBoolean2bool(ctx, field.Selections, res)
+}
+
+func (ec *executionContext) _Mutation_sayHi(ctx context.Context, field graphql.CollectedField) (ret graphql.Marshaler) {
+	defer func() {
+		if r := recover(); r != nil {
+			ec.Error(ctx, ec.Recover(ctx, r))
+			ret = graphql.Null
+		}
+	}()
+	fc := &graphql.FieldContext{
+		Object:     "Mutation",
+		Field:      field,
+		Args:       nil,
+		IsMethod:   true,
+		IsResolver: true,
+	}
+
+	ctx = graphql.WithFieldContext(ctx, fc)
+	rawArgs := field.ArgumentMap(ec.Variables)
+	args, err := ec.field_Mutation_sayHi_args(ctx, rawArgs)
+	if err != nil {
+		ec.Error(ctx, err)
+		return graphql.Null
+	}
+	fc.Args = args
+	resTmp, err := ec.ResolverMiddleware(ctx, func(rctx context.Context) (interface{}, error) {
+		ctx = rctx // use context from middleware stack in children
+		return ec.resolvers.Mutation().SayHi(rctx, args["message"].(string))
 	})
 	if err != nil {
 		ec.Error(ctx, err)
@@ -1717,6 +1795,11 @@ func (ec *executionContext) _Mutation(ctx context.Context, sel ast.SelectionSet)
 			out.Values[i] = graphql.MarshalString("Mutation")
 		case "logOut":
 			out.Values[i] = ec._Mutation_logOut(ctx, field)
+			if out.Values[i] == graphql.Null {
+				invalids++
+			}
+		case "sayHi":
+			out.Values[i] = ec._Mutation_sayHi(ctx, field)
 			if out.Values[i] == graphql.Null {
 				invalids++
 			}
