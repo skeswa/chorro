@@ -69,6 +69,31 @@ spec:
                 secretKeyRef:
                   key: redisPort
                   name: chorro-secret
+            - name: SMTP_HOST
+              valueFrom:
+                secretKeyRef:
+                  key: smtpHost
+                  name: chorro-secret
+            - name: SMTP_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: smtpPassword
+                  name: chorro-secret
+            - name: SMTP_PORT
+              valueFrom:
+                secretKeyRef:
+                  key: smtpPort
+                  name: chorro-secret
+            - name: SMTP_USER
+              valueFrom:
+                secretKeyRef:
+                  key: smtpUser
+                  name: chorro-secret
+            - name: SMTP_USER_NAME
+              valueFrom:
+                secretKeyRef:
+                  key: smtpUserName
+                  name: chorro-secret
           image: ghcr.io/skeswa/chorro-server:0.3.2
           name: chorro-server
           ports:

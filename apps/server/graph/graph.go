@@ -12,6 +12,7 @@ import (
 	"github.com/skeswa/chorro/apps/server/db"
 	"github.com/skeswa/chorro/apps/server/graph/resolver"
 	"github.com/skeswa/chorro/apps/server/graph/server"
+	"github.com/skeswa/chorro/apps/server/mailer"
 	"github.com/skeswa/chorro/apps/server/session"
 )
 
@@ -20,12 +21,14 @@ func Setup(
 	cache *cache.Cache,
 	config *config.Config,
 	db *db.DB,
+	mailer *mailer.Mailer,
 	mux *http.ServeMux,
 ) {
 	resolver := &resolver.Resolver{
 		Cache:  cache,
 		Config: config,
 		DB:     db,
+		Mailer: mailer,
 	}
 
 	respondWithGraphQLPlayground := playground.Handler(

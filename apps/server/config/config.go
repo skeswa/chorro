@@ -27,12 +27,28 @@ type Config struct {
 	HttpPort int
 	// URL of the home page.
 	HomeUrl string
+	// Settings and other values that affect how the server should send emails.
+	Mail MailConfig
 	// Settings and other values that affect how the server should interface with
 	// Postgres.
 	Postgres PostgresConfig
 	// Settings and other values that affect how the server should interface with
 	// Redis.
 	Redis RedisConfig
+}
+
+// Settings and other values that affect how the server should send emails.
+type MailConfig struct {
+	// Network address of the SMTP server.
+	Host string
+	// Password of the server's SMTP user.
+	Password string
+	// TCP port used for SMTP.
+	Port int
+	// Name of the server's SMTP user.
+	User string
+	// User-friendly name of the server's email sender.
+	UserName string
 }
 
 // Settings and other values that affect how the server should interface with
@@ -99,6 +115,37 @@ func New() (*Config, error) {
 				Name:    portFlagName,
 				Usage:   "Port over which HTTP requests should be serviced",
 				Value:   8000,
+			},
+
+			// Mail flags.
+			&cli.StringFlag{
+				EnvVars: []string{"SMTP_HOST"},
+				Name:    mailHostFlagName,
+				Usage:   "Network address of Mail",
+				Value:   "mail",
+			},
+			&cli.StringFlag{
+				EnvVars: []string{"SMTP_PASSWORD"},
+				Name:    mailPasswordFlagName,
+				Usage:   "Password of the server's Mail user",
+			},
+			&cli.IntFlag{
+				EnvVars: []string{"SMTP_PORT"},
+				Name:    mailPortFlagName,
+				Usage:   "TCP port of Mail instance",
+				Value:   5432,
+			},
+			&cli.StringFlag{
+				EnvVars: []string{"SMTP_USER"},
+				Name:    mailUserFlagName,
+				Usage:   "Name of the server's Mail user",
+				Value:   "chorro",
+			},
+			&cli.StringFlag{
+				EnvVars: []string{"SMTP_USER_NAME"},
+				Name:    mailUserNameFlagName,
+				Usage:   "User-friendly name of the server's email sender",
+				Value:   "Chorro",
 			},
 
 			// Postgres flags.
@@ -171,6 +218,13 @@ const (
 	homeUrlFlagName     = "home-url"
 	portFlagName        = "port"
 
+	// Mail flag names.
+	mailHostFlagName     = "smtp-host"
+	mailPasswordFlagName = "smtp-password"
+	mailPortFlagName     = "smtp-port"
+	mailUserFlagName     = "smtp-user"
+	mailUserNameFlagName = "smtp-user-name"
+
 	// Postgres flag names.
 	postgresDatabaseNameFlagName = "postgres-database-name"
 	postgresHostFlagName         = "postgres-host"
@@ -196,8 +250,12 @@ func (config *Config) init(c *cli.Context) error {
 		return fmt.Errorf("%s is not a valid %s", config.HomeUrl, homeUrlFlagName)
 	}
 
-	if config.HttpPort = c.Int(portFlagName); !isValidPort(config.HttpPort) {
+	if config.HttpPort = c.Int(portFlagName); !isValidHTTPPort(config.HttpPort) {
 		return fmt.Errorf("%d is not a valid %s", config.HttpPort, portFlagName)
+	}
+
+	if err := config.Mail.init(c); err != nil {
+		return err
 	}
 
 	if err := config.Postgres.init(c); err != nil {
@@ -224,6 +282,29 @@ func (config *AuthConfig) init(c *cli.Context) error {
 	return nil
 }
 
+// Initializes this MailConfig by reading values from the provided cli.Context.
+func (config *MailConfig) init(c *cli.Context) error {
+	if config.Host = c.String(mailHostFlagName); len(config.Host) < 1 {
+		return fmt.Errorf("\"%s\" is not a valid %s", config.Host, mailHostFlagName)
+	}
+
+	if config.UserName = c.String(mailUserNameFlagName); len(config.UserName) < 1 {
+		return fmt.Errorf("%s is not a valid %s", config.UserName, mailUserNameFlagName)
+	}
+
+	config.Password = c.String(mailPasswordFlagName)
+
+	if config.Port = c.Int(mailPortFlagName); !isValidSMTPPort(config.Port) {
+		return fmt.Errorf("%d is not a valid %s", config.Port, mailPortFlagName)
+	}
+
+	if config.User = c.String(mailUserFlagName); len(config.User) < 1 {
+		return fmt.Errorf("\"%s\" is not a valid %s", config.User, mailUserFlagName)
+	}
+
+	return nil
+}
+
 // Initializes this PostgresConfig by reading values from the provided
 // cli.Context.
 func (config *PostgresConfig) init(c *cli.Context) error {
@@ -237,7 +318,7 @@ func (config *PostgresConfig) init(c *cli.Context) error {
 
 	config.Password = c.String(postgresPasswordFlagName)
 
-	if config.Port = c.Int(postgresPortFlagName); !isValidPort(config.Port) {
+	if config.Port = c.Int(postgresPortFlagName); !isValidHTTPPort(config.Port) {
 		return fmt.Errorf("%d is not a valid %s", config.Port, postgresPortFlagName)
 	}
 
@@ -256,7 +337,7 @@ func (config *RedisConfig) init(c *cli.Context) error {
 
 	config.Password = c.String(redisPasswordFlagName)
 
-	if config.Port = c.Int(redisPortFlagName); !isValidPort(config.Port) {
+	if config.Port = c.Int(redisPortFlagName); !isValidHTTPPort(config.Port) {
 		return fmt.Errorf("%d is not a valid %s", config.Port, redisPortFlagName)
 	}
 
@@ -264,6 +345,11 @@ func (config *RedisConfig) init(c *cli.Context) error {
 }
 
 // Returns true if port is valid.
-func isValidPort(port int) bool {
+func isValidHTTPPort(port int) bool {
 	return port > 1024 && port < 99999
+}
+
+// Returns true if port is valid.
+func isValidSMTPPort(port int) bool {
+	return port > 0 && port < 99999
 }
