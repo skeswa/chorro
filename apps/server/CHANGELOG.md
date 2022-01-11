@@ -1,5 +1,11 @@
 # @chorro/server
 
+## 0.4.1
+
+### Patch Changes
+
+- ec776a5: Added some basic authorization to the API.
+
 ## 0.4.0
 
 ### Minor Changes

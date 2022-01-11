@@ -94,7 +94,7 @@ spec:
                 secretKeyRef:
                   key: smtpUserName
                   name: chorro-secret
-          image: ghcr.io/skeswa/chorro-server:0.4.0
+          image: ghcr.io/skeswa/chorro-server:0.4.1
           name: chorro-server
           ports:
             - containerPort: 8000
