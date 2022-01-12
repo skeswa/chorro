@@ -24,7 +24,7 @@ export async function api(
     return { status: 401 };
   }
 
-  const res = await fetch(`${base}/${resource}`, {
+  const res = await fetch(`${base}/${resource.replace('old/', '')}`, {
     method: request.method,
     headers: {
       'content-type': 'application/json',
@@ -49,8 +49,15 @@ export async function api(
     };
   }
 
-  return {
-    status: res.status,
-    body: await res.json(),
-  };
+  try {
+    return {
+      status: res.status,
+      body: await res.json(),
+    };
+  } catch (err) {
+    return {
+      status: 500,
+      body: err.message,
+    };
+  }
 }

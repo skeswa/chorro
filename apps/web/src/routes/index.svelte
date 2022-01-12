@@ -2,58 +2,45 @@
   export const prerender = true;
 </script>
 
-<script lang="ts">
-  import Counter from '$lib/Counter.svelte';
-</script>
-
 <svelte:head>
-  <title>Home</title>
+  <title>Chorro | Coming Soon</title>
+
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
 </svelte:head>
 
 <section>
-  <h1>
-    <div class="welcome">
-      <picture>
-        <source srcset="svelte-welcome.webp" type="image/webp" />
-        <img src="svelte-welcome.png" alt="Welcome" />
-      </picture>
-    </div>
-
-    to your new<br />SvelteKit app
-  </h1>
-
-  <h2>
-    try editing <strong>src/routes/index.svelte</strong>
-  </h2>
-
-  <Counter />
+  <img src="/logo.svg" alt="Chorro logo">
+  <p>coming soon</p>
 </section>
+
 
 <style>
   section {
+    align-items: center;
     display: flex;
     flex-direction: column;
     justify-content: center;
-    align-items: center;
-    flex: 1;
+    max-height: 100vh;
+    max-width: 100vw;
+    min-height: 100vh;
+    min-width: 100vw;
   }
 
-  h1 {
-    width: 100%;
+  img {
+    max-height: 240px;
+    max-width: 240px;
+    min-height: 240px;
+    min-width: 240px;
   }
 
-  .welcome {
-    position: relative;
-    width: 100%;
-    height: 0;
-    padding: 0 0 calc(100% * 495 / 2048) 0;
-  }
-
-  .welcome img {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    display: block;
+  p {
+    color: #3a425c;
+    font-family: sans-serif;
+    font-size: 36px;
   }
 </style>
