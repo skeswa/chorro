@@ -2,7 +2,7 @@
   "name": "@chorro/design",
   "private": true,
   "description": "Where design-related files and assets for Chorro live",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "license": "MIT",
   "scripts": {
     "changeset": "cd .. && cd .. && yarn run changeset",
