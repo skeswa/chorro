@@ -37,7 +37,7 @@
   </p>
 
   <p>
-    The <a href="/todos">TODOs</a> page illustrates SvelteKit's data loading and
+    The <a href="/old/todos">TODOs</a> page illustrates SvelteKit's data loading and
     form handling. Try using it with JavaScript disabled!
   </p>
 </div>
