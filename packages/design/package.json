@@ -3,5 +3,13 @@
   "private": true,
   "description": "Where design-related files and assets for Chorro live",
   "version": "0.0.1",
-  "license": "MIT"
+  "license": "MIT",
+  "scripts": {
+    "changeset": "cd .. && cd .. && yarn run changeset",
+    "reset": "git checkout main && git pull && git-delete-squashed main"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.19.0",
+    "git-delete-squashed": "^1.0.4"
+  }
 }

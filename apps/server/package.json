@@ -16,7 +16,9 @@
     "test": "go test"
   },
   "devDependencies": {
+    "@changesets/cli": "^2.19.0",
     "dotenv-cli": "^4.1.1",
+    "git-delete-squashed": "^1.0.4",
     "nodemon": "^2.0.15"
   }
 }
