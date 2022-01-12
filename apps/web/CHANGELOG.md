@@ -1,5 +1,11 @@
 # @chorro/web
 
+## 0.1.7
+
+### Patch Changes
+
+- 358b35b: Replaced the default SvelteKit page with a placeholder.
+
 ## 0.1.6
 
 ### Patch Changes
