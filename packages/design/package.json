@@ -1,0 +1,7 @@
+{
+  "name": "@chorro/design",
+  "private": true,
+  "description": "Where design-related files and assets for Chorro live",
+  "version": "0.0.1",
+  "license": "MIT"
+}
