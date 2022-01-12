@@ -3,7 +3,7 @@
 
   // see https://kit.svelte.dev/docs#loading
   export const load: Load = async ({ fetch }) => {
-    const response = await fetch('/debug/hello.text');
+    const response = await fetch('/old/debug/hello.text');
 
     if (response.ok) {
       const message = await response.text();
