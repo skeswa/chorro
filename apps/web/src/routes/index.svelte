@@ -6,7 +6,8 @@
   <title>Chorro | Coming Soon</title>
 
   <style>
-    html, body {
+    html,
+    body {
       margin: 0;
       padding: 0;
     }
@@ -14,10 +15,9 @@
 </svelte:head>
 
 <section>
-  <img src="/logo.svg" alt="Chorro logo">
+  <img src="/logo.svg" alt="Chorro logo" />
   <p>coming soon</p>
 </section>
-
 
 <style>
   section {
