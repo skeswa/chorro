@@ -18,7 +18,7 @@ spec:
         component: web
     spec:
       containers:
-        - image: ghcr.io/skeswa/chorro-web:0.1.7
+        - image: ghcr.io/skeswa/chorro-web:0.2.0
           name: chorro-web
           ports:
             - containerPort: 3000

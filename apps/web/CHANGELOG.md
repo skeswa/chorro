@@ -1,5 +1,11 @@
 # @chorro/web
 
+## 0.2.0
+
+### Minor Changes
+
+- 8d1a59b: Started using TailwindCSS for styling in the web app.
+
 ## 0.1.7
 
 ### Patch Changes
